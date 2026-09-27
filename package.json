@@ -1,0 +1,18 @@
+{
+  "name": "prep-attendance-system",
+  "version": "1.0.0",
+  "description": "نظام تسجيل حضور وغياب اجتماع إعدادي مع تقارير وحساب الإحصائيات وتصدير Word",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "attendance",
+    "church",
+    "prep"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "docx": "^9.7.2"
+  }
+}

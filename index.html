@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام حضور وغياب اجتماع إعدادي - الإصدار الملكي</title>
+  
+  <!-- خط Cairo العربي الفاخر -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- ملف التنسيق الملكي الفاخر -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- شريط الرأس الملكي الفاخر -->
+  <header class="app-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand-section">
+          <div class="brand-emblem">✠</div>
+          <div class="brand-titles">
+            <h1 id="headerMeetingName">اجتماع إعدادي</h1>
+            <p id="headerChurchName">كنيسة الشهيد العظيم مارمينا العجائبي</p>
+          </div>
+        </div>
+        <div class="header-badges">
+          <span class="luxury-badge" id="firebaseSyncBadge" title="حالة الاتصال السحابي اللحظي">
+            <span id="firebaseSyncDot" class="sync-dot" style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#94a3b8; margin-left:6px; box-shadow: 0 0 6px currentColor;"></span>
+            <span id="firebaseSyncText">جاري الاتصال بالسحابة...</span>
+          </span>
+          <span class="luxury-badge" id="headerYearBadge">
+            <span>✨</span>
+            <span>العام الروحي 2026 - 2027</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- شريط التبويبات الفخم -->
+  <nav class="nav-tabs-wrapper no-print">
+    <div class="container">
+      <div class="nav-tabs">
+        <button class="nav-tab-btn active" data-nav-tab="attendance">
+          <span class="tab-icon">📝</span>
+          <span>تسجيل الحضور اليومي</span>
+        </button>
+        <button class="nav-tab-btn" data-nav-tab="reports">
+          <span class="tab-icon">📊</span>
+          <span>التقارير وتصدير Word</span>
+        </button>
+        <button class="nav-tab-btn" data-nav-tab="students">
+          <span class="tab-icon">👥</span>
+          <span>إدارة الطلاب (الأقسام)</span>
+        </button>
+        <button class="nav-tab-btn" data-nav-tab="history">
+          <span class="tab-icon">📅</span>
+          <span>سجل التواريخ السابقة</span>
+        </button>
+        <button class="nav-tab-btn" data-nav-tab="settings">
+          <span class="tab-icon">⚙️</span>
+          <span>الإعدادات والنسخ الاحتياطي</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- الحاوية الرئيسية للمحتوى -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- ========================================================
+           التبويب 1: تسجيل الحضور اليومي (طالب بطالب + جدول شامل)
+           ======================================================== -->
+      <section id="tab-attendance" class="tab-content-panel">
+        <div class="luxury-card">
+          <div class="card-title-row">
+            <div class="card-title">
+              <span class="title-icon">📅</span>
+              <span id="currentDayDisplay">تسجيل الحضور</span>
+            </div>
+
+            <!-- أزرار التبديل الفخمة بين وضع الفردي والجدول -->
+            <div class="view-mode-switcher">
+              <button type="button" id="btnModeSingle" class="view-mode-btn active" onclick="setCheckInMode('single')">
+                <span>🎯</span> تسجيل فردي (طالب بطالب)
+              </button>
+              <button type="button" id="btnModeTable" class="view-mode-btn" onclick="setCheckInMode('table')">
+                <span>📋</span> جدول الحضور الشامل
+              </button>
+            </div>
+          </div>
+
+          <div class="toolbar-grid" style="margin-top: 0.5rem;">
+            <div class="input-group">
+              <label class="input-label" for="attDateInput">📅 اختر تاريخ اليوم:</label>
+              <input type="date" id="attDateInput" class="form-control" onchange="onAttendanceDateChange(this.value)">
+            </div>
+            <div class="input-group">
+              <label class="input-label">📊 حالة الحضور لهذا التاريخ:</label>
+              <div id="attQuickStats" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <!-- يتم التعبئة برمجياً -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- الحاوية الديناميكية لطريقة العرض المحددة (طالب بطالب أو جدول) -->
+        <div id="attStudentsContainer">
+          <!-- يتم الرسم برمجياً عبر app.js -->
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           التبويب 2: التقارير الشاملة وتصدير Word الفاخر
+           ======================================================== -->
+      <section id="tab-reports" class="tab-content-panel hidden">
+        <div class="luxury-card no-print">
+          <div class="card-title-row">
+            <div class="card-title">
+              <span class="title-icon">📊</span>
+              <span>تحديد خيارات وفترة التقرير الإحصائي</span>
+            </div>
+            <div class="bulk-buttons" style="flex-wrap: wrap; gap: 0.4rem;">
+              <button type="button" class="btn btn-sm btn-outline-primary" onclick="setReportDateRange('period_22_21')">📅 فترة من 22 إلى 21</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" onclick="setReportDateRange('this_month')">هذا الشهر كاملاً</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" onclick="setReportDateRange('next_month')">الشهر القادم</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" onclick="setReportDateRange('this_week')">هذا الأسبوع</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" onclick="setReportDateRange('last_30_days')">آخر 30 يوم</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" onclick="setReportDateRange('all_time')">كل التواريخ</button>
+            </div>
+          </div>
+
+          <div class="toolbar-grid">
+            <div class="input-group">
+              <label class="input-label" for="reportGradeFilter">القسم (المرحلة الدراسية):</label>
+              <select id="reportGradeFilter" class="form-control" onchange="renderReportsTab()">
+                <option value="all">جميع المراحل (أولى + ثانية + ثالثة إعدادي)</option>
+                <option value="prep1">سنة أولى إعدادي فقط</option>
+                <option value="prep2">سنة ثانية إعدادي فقط</option>
+                <option value="prep3">سنة ثالثة إعدادي فقط</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="reportStartDate">من تاريخ:</label>
+              <input type="date" id="reportStartDate" class="form-control" onchange="renderReportsTab()" oninput="renderReportsTab()">
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="reportEndDate">إلى تاريخ (زوده تزيد الفعاليات مستقبلياً فوراً):</label>
+              <input type="date" id="reportEndDate" class="form-control" onchange="renderReportsTab()" oninput="renderReportsTab()">
+            </div>
+          </div>
+        </div>
+
+        <!-- بطاقات ملخص الفعاليات والحساب التلقائي -->
+        <div class="luxury-card no-print" style="padding: 1.25rem;">
+          <div style="font-weight: 900; color: var(--text-gold); font-size: 0.95rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>📌</span>
+            <span>الحساب التلقائي لعدد الفعاليات التي أقيمت في هذه الفترة المحددة:</span>
+          </div>
+          <div id="reportEventsSummary" class="kpi-grid">
+            <!-- بطاقات KPIs برمجياً -->
+          </div>
+        </div>
+
+        <!-- جدول التقرير وتصدير Word الفاخر -->
+        <div id="reportTableContainer">
+          <!-- جدول التقرير المحسوب -->
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           التبويب 3: إدارة الطلاب وتقسيم الأقسام
+           ======================================================== -->
+      <section id="tab-students" class="tab-content-panel hidden">
+        <div class="luxury-card">
+          <div class="card-title-row">
+            <div class="card-title">
+              <span class="title-icon">👥</span>
+              <span>قائمة طلاب المرحلة الإعدادية</span>
+            </div>
+            <button type="button" class="btn btn-gold" onclick="openAddStudentModal()">
+              <span>➕</span> إضافة طالب جديد
+            </button>
+          </div>
+
+          <div class="toolbar-grid" style="margin-bottom: 1.25rem;">
+            <div class="input-group">
+              <label class="input-label">تصفية حسب القسم:</label>
+              <div id="studentGradeTabs" class="grade-filter-chips">
+                <!-- شرائح تصفية الصفوف -->
+              </div>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="studentSearchInput">بحث سريع بالاسم:</label>
+              <input type="text" id="studentSearchInput" class="form-control" placeholder="ابحث باسم الطالب..." oninput="onStudentSearchChange(this.value)">
+            </div>
+          </div>
+
+          <div id="studentsListContainer">
+            <!-- جدول الطلاب برمجياً -->
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           التبويب 4: سجل التواريخ السابقة
+           ======================================================== -->
+      <section id="tab-history" class="tab-content-panel hidden">
+        <div class="luxury-card">
+          <div class="card-title-row">
+            <div class="card-title">
+              <span class="title-icon">📅</span>
+              <span>سجل الأيام والفعاليات السابقة</span>
+            </div>
+            <span class="text-muted" style="font-size: 0.85rem; font-weight: 700;">يمكنك الضغط على أي يوم لمراجعته وتعديل الحضور</span>
+          </div>
+
+          <div id="historyListContainer">
+            <!-- شبكة الأيام السابقة -->
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           التبويب 5: الإعدادات والنسخ الاحتياطي
+           ======================================================== -->
+      <section id="tab-settings" class="tab-content-panel hidden">
+        <div class="luxury-card">
+          <div class="card-title">
+            <span class="title-icon">⚙️</span>
+            <span>بيانات الكنيسة والاجتماع</span>
+          </div>
+          <form onsubmit="saveSettingsForm(event)" style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 1.15rem; max-width: 650px;">
+            <div class="input-group">
+              <label class="input-label" for="settingChurchName">اسم الكنيسة (يظهر في ترويسة التقرير ومستند Word):</label>
+              <input type="text" id="settingChurchName" class="form-control" required>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="settingMeetingName">اسم الاجتماع:</label>
+              <input type="text" id="settingMeetingName" class="form-control" required>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="settingLeaderName">مسؤول الاجتماع / أمين الخدمة:</label>
+              <input type="text" id="settingLeaderName" class="form-control">
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="settingAcademicYear">العام الدراسي / الروحي:</label>
+              <input type="text" id="settingAcademicYear" class="form-control" placeholder="مثال: 2026 - 2027">
+            </div>
+            <div>
+              <button type="submit" class="btn btn-gold">حفظ بيانات الاجتماع</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="luxury-card">
+          <div class="card-title">
+            <span class="title-icon">💾</span>
+            <span>النسخ الاحتياطي وحفظ البيانات بأمان</span>
+          </div>
+          <p class="text-muted" style="margin-top: 0.5rem; margin-bottom: 1.25rem; font-size: 0.9rem; font-weight: 600;">
+            تُحفظ جميع البيانات تلقائياً وفوراً في متصفحك. يمكنك تنزيل ملف نسخة احتياطية لحفظها على فلاشة أو نقلها لأي جهاز أو موبايل آخر بكل سهولة.
+          </p>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button type="button" class="btn btn-primary" onclick="exportBackupJson()">
+              <span>📥</span> تنزيل نسخة احتياطية (ملف JSON)
+            </button>
+            <label class="btn btn-outline-secondary" style="cursor: pointer;">
+              <span>📤</span> استيراد نسخة احتياطية
+              <input type="file" accept=".json" style="display: none;" onchange="importBackupJson(event)">
+            </label>
+            <button type="button" class="btn btn-outline-danger" onclick="resetToSampleData()">
+              <span>🔄</span> استعادة البيانات التجريبية
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================
+       نافذة منبثقة: إضافة وتعديل طالب
+       ======================================================== -->
+  <div id="studentModal" class="modal-overlay hidden">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="studentModalTitle">إضافة طالب جديد</h3>
+        <button type="button" class="modal-close-btn" onclick="closeStudentModal()">✕</button>
+      </div>
+      <form onsubmit="saveStudentForm(event)">
+        <div class="modal-body">
+          <div class="input-group">
+            <label class="input-label" for="studentNameInput">اسم الطالب بالكامل: *</label>
+            <input type="text" id="studentNameInput" class="form-control" placeholder="مثال: بيتر عادل كمال" required>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label" for="studentGradeSelect">القسم (المرحلة الدراسية): *</label>
+            <select id="studentGradeSelect" class="form-control" required>
+              <option value="prep1">سنة أولى إعدادي</option>
+              <option value="prep2">سنة ثانية إعدادي</option>
+              <option value="prep3">سنة ثالثة إعدادي</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label" for="studentPhoneInput">رقم التليفون (اختياري):</label>
+            <input type="tel" id="studentPhoneInput" class="form-control" placeholder="مثال: 01012345678">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label" for="studentNotesInput">ملاحظات / موهبة (اختياري):</label>
+            <input type="text" id="studentNotesInput" class="form-control" placeholder="مثال: شماس، كورال، محب للأنشطة...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" onclick="closeStudentModal()">إلغاء</button>
+          <button type="submit" class="btn btn-gold">حفظ بيانات الطالب</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- حاوية التنبيهات (Toasts) -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ملفات الجافاسكريبت والمكتبات -->
+  <script src="lib/docx.iife.js"></script>
+  <script src="js/sample-data.js"></script>
+  <script src="js/docx-export.js"></script>
+  <script src="js/app.js"></script>
+  <script type="module" src="js/firebase-sync.js"></script>
+</body>
+</html>
