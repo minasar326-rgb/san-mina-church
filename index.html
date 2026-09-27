@@ -11,7 +11,1225 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- ملف التنسيق الملكي الفاخر -->
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+/* ============================================================
+   نظام حضور وغياب اجتماع إعدادي - التصميم الملكي الفاخر (Royal Luxury)
+   ألوان كنسية ملكية: كحلي ملكي + لمسات ذهبية + تدرجات زجاجية فخمة
+   خط Cairo، اتجاه RTL، وتجاوب فائق مع الموبايل والتابلت والكمبيوتر
+   ============================================================ */
+
+:root {
+  /* ألوان كنسية ملكية فاخرة */
+  --royal-navy: #0f172a;
+  --royal-navy-light: #1e293b;
+  --royal-blue: #1e3a8a;
+  --royal-blue-accent: #2563eb;
+  --royal-blue-glow: rgba(37, 99, 235, 0.25);
+
+  --gold-50: #fffbeb;
+  --gold-100: #fef3c7;
+  --gold-200: #fde68a;
+  --gold-400: #fbbf24;
+  --gold-500: #f59e0b;
+  --gold-600: #d97706;
+  --gold-700: #b45309;
+  --gold-gradient: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
+  --gold-shadow: 0 4px 14px 0 rgba(217, 119, 6, 0.35);
+
+  --emerald-success: #059669;
+  --emerald-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --emerald-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.3);
+
+  --ruby-danger: #dc2626;
+  --ruby-gradient: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+
+  --text-main: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-gold: #b45309;
+
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --border-light: #e2e8f0;
+  --border-gold: rgba(217, 119, 6, 0.35);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 6px 16px -2px rgba(15, 23, 42, 0.08);
+  --shadow-luxury: 0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 4px 10px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 16px 36px -4px rgba(30, 58, 138, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+  direction: rtl;
+  text-align: right;
+  background-color: var(--bg-page);
+  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ================== ترويسة الموقع الفخمة ================== */
+.app-header {
+  background: linear-gradient(135deg, #090d16 0%, #111827 50%, #1e293b 100%);
+  border-bottom: 3px solid var(--gold-500);
+  color: #ffffff;
+  padding: 1.25rem 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-emblem {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #1e3a8a, #0f172a);
+  border: 2px solid var(--gold-400);
+  box-shadow: var(--gold-shadow);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.85rem;
+  color: var(--gold-400);
+  text-shadow: 0 2px 6px rgba(245, 158, 11, 0.5);
+  transition: transform 0.3s ease;
+}
+.brand-emblem:hover {
+  transform: rotate(5deg) scale(1.05);
+}
+
+.brand-titles h1 {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-titles p {
+  font-size: 0.85rem;
+  color: var(--gold-200);
+  font-weight: 600;
+}
+
+.header-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.luxury-badge {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  color: var(--gold-200);
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.3s ease;
+}
+
+.sync-dot-live {
+  animation: syncPulse 2s infinite ease-in-out;
+}
+
+@keyframes syncPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 6px #10b981;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.75;
+    box-shadow: 0 0 12px #34d399;
+  }
+}
+
+/* ================== شريط التبويبات الفخم ================== */
+.nav-tabs-wrapper {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  padding: 0.35rem 0;
+}
+
+.nav-tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.4rem;
+  padding: 0.25rem 0;
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: transparent;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-tab-btn:hover {
+  background: #f1f5f9;
+  color: var(--royal-blue);
+}
+
+.nav-tab-btn.active {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 100%);
+  color: #ffffff;
+  border-color: #1e3a8a;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+}
+
+.nav-tab-btn.active .tab-icon {
+  filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.6));
+}
+
+/* ================== البطاقات الفخمة ================== */
+.main-content {
+  padding: 1.75rem 0 3.5rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.luxury-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-luxury);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.25s ease;
+}
+
+.luxury-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gold-gradient);
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--royal-navy);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.card-title .title-icon {
+  font-size: 1.4rem;
+}
+
+/* ================== أزرار التبديل بين الأوضاع ================== */
+.view-mode-switcher {
+  display: inline-flex;
+  background: #f1f5f9;
+  border: 1px solid var(--border-light);
+  padding: 0.25rem;
+  border-radius: var(--radius-md);
+  gap: 0.25rem;
+}
+
+.view-mode-btn {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.view-mode-btn.active {
+  background: #ffffff;
+  color: var(--royal-blue);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #cbd5e1;
+}
+
+/* ================== شاشة التسجيل الفردي (طالب بطالب) ================== */
+.single-checkin-wrapper {
+  margin-top: 1rem;
+}
+
+.student-selector-bar {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .student-selector-bar {
+    grid-template-columns: 1fr;
+  }
+}
+
+.search-input-wrap {
+  position: relative;
+}
+
+.search-input-wrap .search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-input-wrap input {
+  padding-right: 2.75rem !important;
+}
+
+/* بطاقة الطالب الفاخرة لتسجيل الحضور */
+.student-kiosk-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-luxury);
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.student-kiosk-card:hover {
+  border-color: #93c5fd;
+  box-shadow: var(--shadow-hover);
+}
+
+.kiosk-student-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid #f1f5f9;
+  margin-bottom: 1.5rem;
+}
+
+.student-avatar-info {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.student-avatar-circle {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  box-shadow: 0 6px 16px rgba(30, 58, 138, 0.25);
+  border: 3px solid #ffffff;
+  outline: 2px solid var(--gold-400);
+}
+
+.student-meta-details h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--royal-navy);
+  margin-bottom: 0.25rem;
+}
+
+.student-meta-details .sub-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.student-nav-arrows {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-arrow-btn {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.nav-arrow-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: var(--royal-blue);
+}
+
+/* شبكة أنشطة الطالب (Selectable Activity Tiles) */
+.student-activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.activity-check-tile {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  padding: 1.15rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  user-select: none;
+  position: relative;
+}
+
+.activity-check-tile:hover {
+  border-color: #93c5fd;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.activity-check-tile.checked {
+  background: linear-gradient(145deg, #f0fdf4 0%, #ecfdf5 100%);
+  border-color: #10b981;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.18);
+}
+
+.tile-info-block {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.tile-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.tile-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.tile-name {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.activity-check-tile.checked .tile-name {
+  color: #065f46;
+}
+
+.tile-day-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* زر التبديل الدائري الفخم (Switch toggle) */
+.luxury-switch {
+  width: 48px;
+  height: 28px;
+  background: #cbd5e1;
+  border-radius: 9999px;
+  position: relative;
+  transition: background-color 0.25s ease;
+  flex-shrink: 0;
+}
+
+.luxury-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 22px;
+  height: 22px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.activity-check-tile.checked .luxury-switch {
+  background: #10b981;
+}
+
+.activity-check-tile.checked .luxury-switch::after {
+  transform: translateX(-20px);
+}
+
+/* زر الحفظ الملكي الكبير */
+.kiosk-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid #f1f5f9;
+}
+
+.btn-royal-save {
+  background: var(--gold-gradient);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1.15rem;
+  font-weight: 900;
+  padding: 0.9rem 2rem;
+  border-radius: var(--radius-md);
+  border: none;
+  box-shadow: var(--gold-shadow);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-royal-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(217, 119, 6, 0.45);
+}
+
+.btn-royal-save:active {
+  transform: translateY(1px);
+}
+
+.save-hotkey-hint {
+  font-size: 0.75rem;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+/* شريط سرعة البحث عن الطلاب */
+.student-quick-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.65rem;
+  max-height: 120px;
+  overflow-y: auto;
+  padding: 0.25rem;
+}
+
+.student-quick-pill {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 9999px;
+  padding: 0.3rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+
+.student-quick-pill:hover {
+  border-color: var(--royal-blue);
+  color: var(--royal-blue);
+  background: #eff6ff;
+}
+
+.student-quick-pill.current {
+  background: var(--royal-blue);
+  color: #ffffff;
+  border-color: var(--royal-blue);
+  box-shadow: 0 2px 6px rgba(30, 58, 138, 0.3);
+}
+
+.student-quick-pill.has-records-today {
+  border-color: #10b981;
+  position: relative;
+}
+.student-quick-pill.has-records-today::after {
+  content: '✓';
+  color: #10b981;
+  font-size: 0.7rem;
+  margin-right: 3px;
+  font-weight: bold;
+}
+
+/* ================== عناصر التحكم والتصفية ================== */
+.toolbar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.input-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+
+.form-control {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.7rem 0.95rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.form-control:focus {
+  border-color: var(--royal-blue-accent);
+  box-shadow: 0 0 0 4px var(--royal-blue-glow);
+}
+
+/* ================== الجداول العصرية ================== */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  text-align: right;
+}
+
+.modern-table th {
+  background: #f8fafc;
+  color: #1e293b;
+  font-weight: 800;
+  padding: 0.95rem 1rem;
+  border-bottom: 2px solid var(--border-light);
+  border-left: 1px solid #f1f5f9;
+}
+
+.modern-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  border-left: 1px solid #f8fafc;
+  vertical-align: middle;
+}
+
+.modern-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* شارات الحضور في وضع الجدول */
+.attendance-toggle-btn {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.4rem 0.95rem;
+  border-radius: 9999px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.15s ease;
+}
+
+.attendance-toggle-btn.is-present {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #6ee7b7;
+}
+
+.attendance-toggle-btn.is-present:hover {
+  background: #d1fae5;
+  transform: scale(1.02);
+}
+
+.attendance-toggle-btn.is-absent {
+  background: #f8fafc;
+  color: #94a3b8;
+  border-color: #cbd5e1;
+}
+
+.attendance-toggle-btn.is-absent:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* شارات المراحل */
+.grade-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+}
+
+/* ================== أزرار ================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.btn-sm {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #172554 0%, #0f172a 100%);
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  background: var(--gold-gradient);
+  color: #ffffff;
+  box-shadow: var(--gold-shadow);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.45);
+}
+
+.btn-outline-primary {
+  background: transparent;
+  border-color: var(--royal-blue);
+  color: var(--royal-blue);
+}
+.btn-outline-primary:hover {
+  background: #eff6ff;
+}
+
+.btn-outline-secondary {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: var(--text-secondary);
+}
+.btn-outline-secondary:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.btn-outline-danger {
+  background: transparent;
+  border-color: #fca5a5;
+  color: var(--ruby-danger);
+}
+.btn-outline-danger:hover {
+  background: #fef2f2;
+}
+
+.btn-micro {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  cursor: pointer;
+}
+.btn-micro:hover {
+  background: #f1f5f9;
+}
+.btn-micro.danger {
+  color: var(--ruby-danger);
+  border-color: #fca5a5;
+}
+
+/* ================== شرائح التصفية (Chips) ================== */
+.grade-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.chip {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  background: #e2e8f0;
+  color: var(--text-main);
+}
+
+.chip.active {
+  background: var(--royal-navy);
+  color: var(--gold-400);
+  border-color: var(--gold-600);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);
+}
+
+/* ================== بطاقات الإحصائيات الفخمة ================== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.kpi-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.kpi-card.highlight {
+  background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+  border-color: #93c5fd;
+}
+
+.kpi-card.highlight-success {
+  background: linear-gradient(145deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #6ee7b7;
+}
+
+.kpi-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.35rem;
+}
+
+.kpi-val {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: var(--royal-navy);
+}
+
+.kpi-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ترويسة التقرير */
+.report-header-banner {
+  background: linear-gradient(135deg, #090d16 0%, #1e293b 50%, #1e3a8a 100%);
+  border: 2px solid var(--gold-500);
+  color: #ffffff;
+  padding: 1.5rem 1.75rem;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-luxury);
+}
+
+.banner-title h3 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.banner-title p {
+  font-size: 0.95rem;
+  color: var(--gold-200);
+  margin-top: 0.35rem;
+}
+
+.banner-actions {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+/* خلايا التقرير */
+.badge-total {
+  font-size: 0.75rem;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  margin-right: 4px;
+}
+
+.count-box {
+  font-weight: 900;
+  color: var(--text-main);
+  background: #f1f5f9;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.count-max {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.total-cell {
+  background: #f8fafc;
+  color: var(--royal-blue);
+  font-weight: 900;
+}
+
+/* شريط التقدم */
+.percentage-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress-bar-mini {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #10b981);
+  border-radius: 9999px;
+}
+
+.percent-text {
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+/* شارات التقييم */
+.eval-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.eval-excellent {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1.5px solid #6ee7b7;
+}
+
+.eval-verygood {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1.5px solid #93c5fd;
+}
+
+.eval-good {
+  background: #fefce8;
+  color: #854d0e;
+  border: 1.5px solid #fde047;
+}
+
+.eval-low {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1.5px solid #fca5a5;
+}
+
+/* ================== النوافذ المنبثقة ================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-dialog {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--gold-400);
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
+  animation: modalIn 0.25s ease-out;
+}
+
+@keyframes modalIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #090d16, #1e293b);
+  color: #ffffff;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--gold-500);
+}
+
+.modal-header h3 {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.35rem;
+  color: #cbd5e1;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.modal-footer {
+  background: #f8fafc;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* ================== إشعارات الحفظ الفخمة (Toast) ================== */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 2000;
+}
+
+.toast-msg {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: toastIn 0.3s ease-out;
+  border-right: 5px solid var(--gold-500);
+}
+
+.toast-msg.toast-success {
+  border-right-color: #10b981;
+  background: #064e3b;
+}
+
+.toast-msg.toast-error {
+  border-right-color: #ef4444;
+  background: #7f1d1d;
+}
+
+@keyframes toastIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ================== التوافق مع الطباعة ================== */
+@media print {
+  .app-header,
+  .nav-tabs-wrapper,
+  .banner-actions,
+  .bulk-buttons,
+  .toolbar-grid,
+  .card-title-row,
+  .toast-container,
+  .no-print,
+  .student-selector-bar,
+  .student-quick-pills {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .luxury-card {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .modern-table {
+    border: 1px solid #000000;
+  }
+
+  .modern-table th,
+  .modern-table td {
+    border: 1px solid #000000;
+    padding: 4px 6px;
+  }
+}
+
+</style>
 </head>
 <body>
 
@@ -334,10 +1552,2515 @@
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- ملفات الجافاسكريبت والمكتبات -->
-  <script src="lib/docx.iife.js"></script>
-  <script src="js/sample-data.js"></script>
-  <script src="js/docx-export.js"></script>
-  <script src="js/app.js"></script>
-  <script type="module" src="js/firebase-sync.js"></script>
+  <!-- مكتبة docx السحابية لتوليد ملفات Word بأعلى توافقية -->
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+
+  <!-- البيانات الأولية -->
+  <script>
+/**
+ * بيانات أولية تجريبية لاجتماع إعدادي
+ * تشمل طلاب في المراحل الثلاث (أولى، ثانية، ثالثة إعدادي) وسجلات حضور سابقة
+ */
+const SAMPLE_DATA = {
+  settings: {
+    churchName: "كنيسة الشهيد العظيم مارمينا العجائبي",
+    meetingName: "اجتماع القديس يوحنا الحبيب للمرحلة الإعدادية",
+    leaderName: "تاسوني مريم / أستاذ مينا",
+    academicYear: "2026 - 2027"
+  },
+  students: [
+    // سنة أولى إعدادي
+    { id: "std-101", name: "مينا أشرف فؤاد", grade: "prep1", phone: "01012345671", notes: "محب للتسبحة" },
+    { id: "std-102", name: "مارينا صبحي وليم", grade: "prep1", phone: "01123456782", notes: "صوتها مميز بالكورال" },
+    { id: "std-103", name: "كيرلس هاني شحاتة", grade: "prep1", phone: "01234567893", notes: "شماس" },
+    { id: "std-104", name: "جويس إيهاب سمير", grade: "prep1", phone: "01098765434", notes: "ملتزمة بحفظ الآيات" },
+    { id: "std-105", name: "دانيال مدحت رفعت", grade: "prep1", phone: "01287654325", notes: "" },
+
+    // سنة ثانية إعدادي
+    { id: "std-201", name: "بيتر عادل كمال", grade: "prep2", phone: "01034567891", notes: "شماس" },
+    { id: "std-202", name: "ساندرا نادر عزيز", grade: "prep2", phone: "01145678902", notes: "متفوقة دراسياً" },
+    { id: "std-203", name: "يوستينا مجدي نجيب", grade: "prep2", phone: "01256789013", notes: "هادئة وسلوك ممتاز" },
+    { id: "std-204", name: "فادي سامح موريس", grade: "prep2", phone: "01067890124", notes: "يحب المسابقات والأنشطة" },
+    { id: "std-205", name: "مارتن نشأت رمزي", grade: "prep2", phone: "01178901235", notes: "" },
+
+    // سنة ثالثة إعدادي
+    { id: "std-301", name: "توماس سامي صبري", grade: "prep3", phone: "01289012346", notes: "شماس نشيط ومرتل" },
+    { id: "std-302", name: "سيلفيا عاطف زكي", grade: "prep3", phone: "01090123457", notes: "منظمة ومساعدة للخدام" },
+    { id: "std-303", name: "مارك إبراهيم عوض", grade: "prep3", phone: "01101234568", notes: "" },
+    { id: "std-304", name: "جولييت عصام خليل", grade: "prep3", phone: "01212345679", notes: "حافظة للأجبية" },
+    { id: "std-305", name: "أبانوب عماد ألفي", grade: "prep3", phone: "01023456780", notes: "مواظب على القداس" }
+  ],
+  
+  /**
+   * سجلات الحضور السابقة لتوفير تجربة فورية للتقارير
+   * المفتاح: "YYYY-MM-DD"
+   * القيم: كائن يحتوي تفاصيل البنود والطلاب الحاضرين
+   */
+  records: {
+    // الثلاثاء 1 سبتمبر 2026: اجتماع إعدادي
+    "2026-09-01": {
+      date: "2026-09-01",
+      activities: {
+        meeting: ["std-101", "std-102", "std-103", "std-104", "std-201", "std-202", "std-203", "std-301", "std-302", "std-304", "std-305"]
+      }
+    },
+    // الخميس 3 سبتمبر 2026: تسبحة وعشية واعتراف
+    "2026-09-03": {
+      date: "2026-09-03",
+      activities: {
+        tasbeha: ["std-101", "std-103", "std-201", "std-301", "std-304", "std-305"],
+        vespers: ["std-101", "std-102", "std-201", "std-202", "std-301", "std-302"],
+        confession: ["std-101", "std-201", "std-301", "std-304"]
+      }
+    },
+    // الجمعة 4 سبتمبر 2026: قداس إلهي
+    "2026-09-04": {
+      date: "2026-09-04",
+      activities: {
+        liturgy: ["std-101", "std-102", "std-103", "std-104", "std-105", "std-201", "std-202", "std-203", "std-301", "std-302", "std-303", "std-304", "std-305"]
+      }
+    },
+    // الأحد 6 سبتمبر 2026: أجبية + سلوك + كتاب مقدس
+    "2026-09-06": {
+      date: "2026-09-06",
+      activities: {
+        agpeya: ["std-101", "std-102", "std-104", "std-201", "std-202", "std-203", "std-301", "std-302", "std-304"],
+        behavior: ["std-101", "std-102", "std-103", "std-104", "std-105", "std-201", "std-202", "std-203", "std-204", "std-301", "std-302", "std-303", "std-304", "std-305"],
+        bible: ["std-101", "std-102", "std-104", "std-202", "std-203", "std-301", "std-302", "std-304"]
+      }
+    },
+    // الثلاثاء 8 سبتمبر 2026: اجتماع إعدادي
+    "2026-09-08": {
+      date: "2026-09-08",
+      activities: {
+        meeting: ["std-101", "std-102", "std-103", "std-104", "std-105", "std-201", "std-202", "std-204", "std-301", "std-302", "std-303", "std-304"]
+      }
+    },
+    // الخميس 10 سبتمبر 2026: تسبحة وعشية واعتراف
+    "2026-09-10": {
+      date: "2026-09-10",
+      activities: {
+        tasbeha: ["std-101", "std-103", "std-201", "std-204", "std-301", "std-304"],
+        vespers: ["std-101", "std-103", "std-201", "std-202", "std-301"],
+        confession: ["std-103", "std-201", "std-304"]
+      }
+    },
+    // الجمعة 11 سبتمبر 2026: قداس إلهي
+    "2026-09-11": {
+      date: "2026-09-11",
+      activities: {
+        liturgy: ["std-101", "std-102", "std-103", "std-104", "std-201", "std-202", "std-203", "std-205", "std-301", "std-302", "std-304", "std-305"]
+      }
+    },
+    // الأحد 13 سبتمبر 2026: أجبية + سلوك + كتاب مقدس
+    "2026-09-13": {
+      date: "2026-09-13",
+      activities: {
+        agpeya: ["std-101", "std-102", "std-103", "std-201", "std-202", "std-301", "std-302", "std-304", "std-305"],
+        behavior: ["std-101", "std-102", "std-103", "std-104", "std-201", "std-202", "std-203", "std-301", "std-302", "std-304", "std-305"],
+        bible: ["std-101", "std-103", "std-201", "std-202", "std-301", "std-302", "std-305"]
+      }
+    },
+    // الثلاثاء 15 سبتمبر 2026: اجتماع إعدادي
+    "2026-09-15": {
+      date: "2026-09-15",
+      activities: {
+        meeting: ["std-101", "std-102", "std-103", "std-104", "std-201", "std-202", "std-203", "std-204", "std-301", "std-302", "std-304", "std-305"]
+      }
+    },
+    // الجمعة 18 سبتمبر 2026: قداس إلهي
+    "2026-09-18": {
+      date: "2026-09-18",
+      activities: {
+        liturgy: ["std-101", "std-102", "std-103", "std-104", "std-201", "std-202", "std-203", "std-301", "std-302", "std-304", "std-305"]
+      }
+    },
+    // الأحد 20 سبتمبر 2026: أجبية + سلوك + كتاب مقدس
+    "2026-09-20": {
+      date: "2026-09-20",
+      activities: {
+        agpeya: ["std-101", "std-102", "std-104", "std-201", "std-202", "std-203", "std-301", "std-302", "std-304"],
+        behavior: ["std-101", "std-102", "std-103", "std-104", "std-105", "std-201", "std-202", "std-203", "std-204", "std-301", "std-302", "std-304", "std-305"],
+        bible: ["std-101", "std-102", "std-104", "std-201", "std-202", "std-301", "std-302", "std-304"]
+      }
+    },
+    // الثلاثاء 22 سبتمبر 2026: اجتماع إعدادي
+    "2026-09-22": {
+      date: "2026-09-22",
+      activities: {
+        meeting: ["std-101", "std-102", "std-103", "std-104", "std-201", "std-202", "std-203", "std-301", "std-302", "std-304", "std-305"]
+      }
+    },
+    // الخميس 24 سبتمبر 2026: تسبحة
+    "2026-09-24": {
+      date: "2026-09-24",
+      activities: {
+        tasbeha: ["std-101", "std-103", "std-201", "std-301", "std-304"]
+      }
+    },
+    // الجمعة 25 سبتمبر 2026: قداس إلهي
+    "2026-09-25": {
+      date: "2026-09-25",
+      activities: {
+        liturgy: ["std-101", "std-102", "std-103", "std-104", "std-105", "std-201", "std-202", "std-203", "std-204", "std-301", "std-302", "std-303", "std-304", "std-305"]
+      }
+    }
+  }
+};
+
+  </script>
+
+  <!-- تصدير Word -->
+  <script>
+/**
+ * وحدة تصدير التقارير إلى مستند Microsoft Word (.docx)
+ * مصممة لاجتماع إعدادي مع التنسيق العربي الكامل (RTL) والجداول الملونة
+ */
+
+const DocxExporter = {
+  /**
+   * تصدير التقرير إلى ملف Word (.docx)
+   * @param {Object} reportData بيانات التقرير المحسوبة
+   * @param {Object} settings إعدادات الكنيسة والاجتماع
+   */
+  async exportReport(reportData, settings = {}) {
+    const churchName = settings.churchName || "كنيسة الشهيد العظيم مارمينا العجائبي";
+    const meetingName = settings.meetingName || "اجتماع إعدادي";
+    const academicYear = settings.academicYear || "2026 - 2027";
+    const fileName = `تقرير_حضور_إعدادي_${reportData.gradeLabel.replace(/\s+/g, '_')}_${reportData.startDate}_إلى_${reportData.endDate}.docx`;
+
+    // إذا كانت مكتبة docx متوفرة في المتصفح نستخدمها لإنتاج ملف DOCX حقيقي
+    if (window.docx) {
+      try {
+        await this.generateRealDocx(reportData, { churchName, meetingName, academicYear, fileName });
+        return;
+      } catch (err) {
+        console.warn("Docx library error, falling back to HTML Word doc:", err);
+      }
+    }
+
+    // بديل فائق الجودة والسرعة ينتج مستند Word متوافق تماماً
+    this.generateHtmlWordDoc(reportData, { churchName, meetingName, academicYear, fileName });
+  },
+
+  /**
+   * توليد ملف DOCX أصلي باستخدام مكتبة docx.js
+   */
+  async generateRealDocx(data, opts) {
+    const {
+      Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+      WidthType, AlignmentType, PageOrientation, ShadingType, BorderStyle
+    } = window.docx;
+
+    const thinBorder = {
+      style: BorderStyle.SINGLE,
+      size: 4,
+      color: "CCCCCC"
+    };
+
+    const tableBorders = {
+      top: thinBorder,
+      bottom: thinBorder,
+      left: thinBorder,
+      right: thinBorder,
+      insideHorizontal: thinBorder,
+      insideVertical: thinBorder
+    };
+
+    // صف العناوين في الجدول
+    const headerCells = [
+      { text: "م", width: 4 },
+      { text: "اسم الطالب", width: 17 },
+      { text: "القسم", width: 9 },
+      { text: `الاجتماع (${data.counts.meeting})`, width: 8 },
+      { text: `الأجبية (${data.counts.agpeya})`, width: 7 },
+      { text: `السلوك (${data.counts.behavior})`, width: 7 },
+      { text: `الكتاب (${data.counts.bible})`, width: 7 },
+      { text: `التسبحة (${data.counts.tasbeha})`, width: 7 },
+      { text: `العشية (${data.counts.vespers})`, width: 7 },
+      { text: `الاعتراف (${data.counts.confession})`, width: 7 },
+      { text: `القداس (${data.counts.liturgy})`, width: 7 },
+      { text: "المجموع", width: 9 },
+      { text: "النسبة", width: 6 },
+      { text: "التقييم", width: 7 }
+    ].map(col => new TableCell({
+      width: { size: col.width, type: WidthType.PERCENTAGE },
+      shading: { fill: "1E3A8A", type: ShadingType.CLEAR },
+      margins: { top: 120, bottom: 120, left: 60, right: 60 },
+      children: [
+        new Paragraph({
+          alignment: AlignmentType.CENTER,
+          children: [
+            new TextRun({
+              text: col.text,
+              bold: true,
+              color: "FFFFFF",
+              size: 18,
+              font: "Cairo"
+            })
+          ]
+        })
+      ]
+    }));
+
+    const rows = [
+      new TableRow({
+        children: headerCells,
+        tableHeader: true
+      })
+    ];
+
+    // إضافة صفوف الطلاب
+    data.studentsReport.forEach((student, index) => {
+      const isEven = index % 2 === 0;
+      const rowFill = isEven ? "F8FAFC" : "FFFFFF";
+
+      const cells = [
+        { text: (index + 1).toString(), align: AlignmentType.CENTER, bold: false },
+        { text: student.name, align: AlignmentType.RIGHT, bold: true },
+        { text: student.gradeLabel, align: AlignmentType.CENTER, bold: false },
+        { text: `${student.meetingCount} من ${data.counts.meeting}`, align: AlignmentType.CENTER, bold: false },
+        { text: `${student.agpeyaCount} من ${data.counts.agpeya}`, align: AlignmentType.CENTER, bold: false },
+        { text: `${student.behaviorCount} من ${data.counts.behavior}`, align: AlignmentType.CENTER, bold: false },
+        { text: `${student.bibleCount} من ${data.counts.bible}`, align: AlignmentType.CENTER, bold: false },
+        { text: `${student.tasbehaCount} من ${data.counts.tasbeha}`, align: AlignmentType.CENTER, bold: false },
+        { text: `${student.vespersCount} من ${data.counts.vespers}`, align: AlignmentType.CENTER, bold: false },
+        { text: `${student.confessionCount} من ${data.counts.confession}`, align: AlignmentType.CENTER, bold: false },
+        { text: `${student.liturgyCount} من ${data.counts.liturgy}`, align: AlignmentType.CENTER, bold: false },
+        { text: `${student.totalAttended} من ${data.totalEventsPossible}`, align: AlignmentType.CENTER, bold: true },
+        { text: `${student.percentage}%`, align: AlignmentType.CENTER, bold: true },
+        { text: student.evaluation, align: AlignmentType.CENTER, bold: true }
+      ].map(cell => new TableCell({
+        shading: { fill: rowFill, type: ShadingType.CLEAR },
+        margins: { top: 90, bottom: 90, left: 50, right: 50 },
+        children: [
+          new Paragraph({
+            alignment: cell.align,
+            children: [
+              new TextRun({
+                text: cell.text,
+                bold: cell.bold,
+                color: "1E293B",
+                size: 17,
+                font: "Cairo"
+              })
+            ]
+          })
+        ]
+      }));
+
+      rows.push(new TableRow({ children: cells }));
+    });
+
+    const doc = new Document({
+      sections: [{
+        properties: {
+          page: {
+            orientation: PageOrientation.LANDSCAPE,
+            margin: { top: 720, bottom: 720, left: 720, right: 720 }
+          }
+        },
+        children: [
+          // عنوان الكنيسة والاجتماع
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children: [
+              new TextRun({
+                text: `✠ ${opts.churchName} - ${opts.meetingName} ✠`,
+                bold: true,
+                size: 26,
+                color: "1E3A8A",
+                font: "Cairo"
+              })
+            ]
+          }),
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            spacing: { after: 180 },
+            children: [
+              new TextRun({
+                text: `تقرير متابعة الحضور والأنشطة الروحية الشامل (${opts.academicYear})`,
+                bold: true,
+                size: 22,
+                color: "0F172A",
+                font: "Cairo"
+              })
+            ]
+          }),
+
+          // بيانات التقرير
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            spacing: { after: 120 },
+            children: [
+              new TextRun({ text: `القسم المستهدف: `, bold: true, size: 20, font: "Cairo" }),
+              new TextRun({ text: `${data.gradeLabel}   |   `, size: 20, font: "Cairo" }),
+              new TextRun({ text: `الفترة الزمنية: `, bold: true, size: 20, font: "Cairo" }),
+              new TextRun({ text: `من ${data.startDate} إلى ${data.endDate}   |   `, size: 20, font: "Cairo" }),
+              new TextRun({ text: `تاريخ التقرير: `, bold: true, size: 20, font: "Cairo" }),
+              new TextRun({ text: `${new Date().toLocaleDateString('ar-EG')}`, size: 20, font: "Cairo" })
+            ]
+          }),
+
+          // سطر ملخص الفعاليات
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            spacing: { after: 240 },
+            children: [
+              new TextRun({
+                text: `حساب أيام الفترة تقويمياً: ` +
+                  `[${data.counts.meeting} أيام ثلاثاء للاجتماع] - ` +
+                  `[${data.counts.agpeya} أيام أحد (أجبية وسلوك وكتاب مقدس)] - ` +
+                  `[${data.counts.tasbeha} أيام خميس (تسبحة وعشية واعتراف)] - ` +
+                  `[${data.counts.liturgy} أيام جمعة للقداس الإلهي] | إجمالي الفرص: ${data.totalEventsPossible} فرصة`,
+                bold: true,
+                size: 18,
+                color: "475569",
+                font: "Cairo"
+              })
+            ]
+          }),
+
+          // جدول البيانات الرئيسي
+          new Table({
+            alignment: AlignmentType.CENTER,
+            width: { size: 100, type: WidthType.PERCENTAGE },
+            borders: tableBorders,
+            rows: rows
+          }),
+
+          // توقيعات أسفل التقرير
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            spacing: { before: 360 },
+            children: [
+              new TextRun({
+                text: `إجمالي عدد الطلاب بالتقرير: ${data.studentsReport.length} طالب   |   متوسط الحضور العام: ${data.averageAttendance}%`,
+                bold: true,
+                size: 20,
+                color: "1E3A8A",
+                font: "Cairo"
+              })
+            ]
+          }),
+          new Paragraph({
+            alignment: AlignmentType.DISTRIBUTE,
+            spacing: { before: 400 },
+            children: [
+              new TextRun({ text: "خادم المرحلة: ...........................          ", bold: true, size: 20, font: "Cairo" }),
+              new TextRun({ text: "أمين الخدمة: ...........................          ", bold: true, size: 20, font: "Cairo" }),
+              new TextRun({ text: "كاهن الاجتماع: ...........................", bold: true, size: 20, font: "Cairo" })
+            ]
+          })
+        ]
+      }]
+    });
+
+    const blob = await Packer.toBlob(doc);
+    this.downloadBlob(blob, opts.fileName);
+  },
+
+  /**
+   * توليد مستند Word (.doc) بصيغة HTML المتوافقة 100% مع Microsoft Word
+   */
+  generateHtmlWordDoc(data, opts) {
+    const tableRows = data.studentsReport.map((student, idx) => `
+      <tr style="background-color: ${idx % 2 === 0 ? '#f8fafc' : '#ffffff'};">
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${idx + 1}</td>
+        <td style="text-align: right; padding: 7px; font-weight: bold; border: 1px solid #cbd5e1;">${student.name}</td>
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${student.gradeLabel}</td>
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${student.meetingCount} من ${data.counts.meeting}</td>
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${student.agpeyaCount} من ${data.counts.agpeya}</td>
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${student.behaviorCount} من ${data.counts.behavior}</td>
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${student.bibleCount} من ${data.counts.bible}</td>
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${student.tasbehaCount} من ${data.counts.tasbeha}</td>
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${student.vespersCount} من ${data.counts.vespers}</td>
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${student.confessionCount} من ${data.counts.confession}</td>
+        <td style="text-align: center; padding: 7px; border: 1px solid #cbd5e1;">${student.liturgyCount} من ${data.counts.liturgy}</td>
+        <td style="text-align: center; padding: 7px; font-weight: bold; background-color: #f1f5f9; border: 1px solid #cbd5e1;">${student.totalAttended} من ${data.totalEventsPossible}</td>
+        <td style="text-align: center; padding: 7px; font-weight: bold; color: ${student.percentage >= 70 ? '#166534' : student.percentage >= 50 ? '#854d0e' : '#991b1b'}; border: 1px solid #cbd5e1;">${student.percentage}%</td>
+        <td style="text-align: center; padding: 7px; font-weight: bold; border: 1px solid #cbd5e1;">${student.evaluation}</td>
+      </tr>
+    `).join("");
+
+    const htmlContent = `
+      <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+      <head>
+        <meta charset="utf-8">
+        <title>${opts.fileName}</title>
+        <!--[if gte mso 9]>
+        <xml>
+          <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>100</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+          </w:WordDocument>
+        </xml>
+        <![endif]-->
+        <style>
+          @page {
+            size: landscape;
+            margin: 1.5cm;
+          }
+          body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            color: #1e293b;
+          }
+          .header {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+          .title-main {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1e3a8a;
+          }
+          .title-sub {
+            font-size: 18px;
+            font-weight: bold;
+            color: #334155;
+            margin-top: 5px;
+          }
+          .meta-box {
+            background-color: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 14px;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 12px;
+          }
+          th {
+            background-color: #1e3a8a;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 8px 4px;
+            border: 1px solid #1e3a8a;
+            text-align: center;
+          }
+          .footer-signs {
+            margin-top: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: bold;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="title-main">✠ ${opts.churchName} - ${opts.meetingName} ✠</div>
+          <div class="title-sub">تقرير حضور وغياب الأنشطة الروحية للمرحلة الإعدادية (${opts.academicYear})</div>
+        </div>
+
+        <div class="meta-box">
+          <strong>القسم / المرحلة:</strong> ${data.gradeLabel} &nbsp;|&nbsp;
+          <strong>الفترة الزمنية:</strong> من ${data.startDate} إلى ${data.endDate} &nbsp;|&nbsp;
+          <strong>تاريخ الاستخراج:</strong> ${new Date().toLocaleDateString('ar-EG')}
+          <br>
+          <span style="font-size: 12px; color: #475569; margin-top: 5px; display: inline-block;">
+            عدد الفعاليات في الفترة:
+            [الاجتماع: ${data.counts.meeting}] -
+            [صلاة الأجبية: ${data.counts.agpeya}] -
+            [السلوك: ${data.counts.behavior}] -
+            [الكتاب المقدس: ${data.counts.bible}] -
+            [التسبحة: ${data.counts.tasbeha}] -
+            [العشية: ${data.counts.vespers}] -
+            [الاعتراف: ${data.counts.confession}] -
+            [القداس: ${data.counts.liturgy}]
+            (إجمالي الفرص الممكنة: ${data.totalEventsPossible})
+          </span>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 3%;">م</th>
+              <th style="width: 17%;">اسم الطالب</th>
+              <th style="width: 9%;">القسم</th>
+              <th style="width: 8%;">الاجتماع (${data.counts.meeting})</th>
+              <th style="width: 7%;">الأجبية (${data.counts.agpeya})</th>
+              <th style="width: 7%;">السلوك (${data.counts.behavior})</th>
+              <th style="width: 7%;">الكتاب (${data.counts.bible})</th>
+              <th style="width: 7%;">التسبحة (${data.counts.tasbeha})</th>
+              <th style="width: 7%;">العشية (${data.counts.vespers})</th>
+              <th style="width: 7%;">الاعتراف (${data.counts.confession})</th>
+              <th style="width: 7%;">القداس (${data.counts.liturgy})</th>
+              <th style="width: 9%;">المجموع</th>
+              <th style="width: 6%;">النسبة</th>
+              <th style="width: 7%;">التقييم</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows}
+          </tbody>
+        </table>
+
+        <div style="margin-top: 20px; font-weight: bold; text-align: center; color: #1e3a8a;">
+          إجمالي عدد الطلاب: ${data.studentsReport.length} طالب &nbsp;|&nbsp; متوسط الحضور العام: ${data.averageAttendance}%
+        </div>
+
+        <table style="width: 100%; border: none; margin-top: 40px; font-size: 14px; font-weight: bold;">
+          <tr style="border: none;">
+            <td style="border: none; text-align: right; width: 33%;">خادم المرحلة: ..........................</td>
+            <td style="border: none; text-align: center; width: 33%;">أمين الخدمة: ..........................</td>
+            <td style="border: none; text-align: left; width: 33%;">كاهن الاجتماع: ..........................</td>
+          </tr>
+        </table>
+      </body>
+      </html>
+    `;
+
+    const blob = new Blob(['\ufeff', htmlContent], {
+      type: 'application/msword'
+    });
+    this.downloadBlob(blob, opts.fileName.replace('.docx', '.doc'));
+  },
+
+  downloadBlob(blob, fileName) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+  }
+};
+
+window.DocxExporter = DocxExporter;
+
+  </script>
+
+  <!-- المحرك الأساسي للموقع -->
+  <script>
+/**
+ * نظام حضور وغياب اجتماع إعدادي - الإصدار الفاخر (Royal Luxury Edition)
+ * تحكم فردي يدوي 100%: الخادم يختار التاريخ ويختار الطالب ويسجل له بيده فقط
+ * بدون أي تحضير تلقائي لأي طالب، وحفظ كل طالب بشكل مستقل تماماً
+ */
+
+// تعريف المراحل الدراسية
+const GRADES = {
+  prep1: { id: "prep1", name: "سنة أولى إعدادي", short: "أولى", color: "#1d4ed8", bg: "#dbeafe" },
+  prep2: { id: "prep2", name: "سنة ثانية إعدادي", short: "ثانية", color: "#047857", bg: "#d1fae5" },
+  prep3: { id: "prep3", name: "سنة ثالثة إعدادي", short: "ثالثة", color: "#6d28d9", bg: "#ede9fe" }
+};
+
+// تعريف جميع الأنشطة الروحية المتاحة للاختيار
+const ACTIVITIES = {
+  meeting: { id: "meeting", name: "حضور الاجتماع", dayName: "الثلاثاء", icon: "👥", hint: "اجتماع إعدادي الأسبوعي" },
+  agpeya: { id: "agpeya", name: "صلاة الأجبية", dayName: "الأحد", icon: "📖", hint: "المواظبة على صلاة الأجبية" },
+  behavior: { id: "behavior", name: "السلوك والهدوء", dayName: "الأحد", icon: "⭐", hint: "الانضباط والمشاركة الروحية" },
+  bible: { id: "bible", name: "الكتاب المقدس", dayName: "الأحد", icon: "✝️", hint: "حفظ ومتابعة دراسة الكلمة" },
+  tasbeha: { id: "tasbeha", name: "التسبحة", dayName: "الخميس", icon: "🕯️", hint: "حضور تسبحة نصف الليل" },
+  vespers: { id: "vespers", name: "صلاة العشية", dayName: "الخميس", icon: "✨", hint: "حضور صلاة عشية الخميس" },
+  confession: { id: "confession", name: "سر الاعتراف", dayName: "الخميس", icon: "🕊️", hint: "ممارسة سر التوبة والاعتراف" },
+  liturgy: { id: "liturgy", name: "القداس الإلهي", dayName: "الجمعة", icon: "⛪", hint: "التناول والقداس الإلهي" }
+};
+
+// حالة التطبيق
+const state = {
+  activeTab: "attendance",
+  checkInMode: "single", // single (طالب بطالب) | table (جدول شامل)
+  
+  settings: {
+    churchName: "كنيسة الشهيد العظيم مارمينا العجائبي",
+    meetingName: "اجتماع إعدادي",
+    leaderName: "خدام اجتماع إعدادي",
+    academicYear: "2026 - 2027"
+  },
+  
+  students: [],
+  records: {},
+  currentDate: new Date().toISOString().split("T")[0],
+
+  // الحضور الفردي
+  selectedStudentId: null,
+  singleStudentDraftActivities: {}, // البنود المحددة للطالب الحالي فقط
+  
+  // الفلاتر
+  attendanceFilterGrade: "all",
+  attendanceSearch: "",
+  
+  reportFilterGrade: "all",
+  reportStartDate: "",
+  reportEndDate: "",
+  
+  studentFilterGrade: "all",
+  studentSearch: "",
+  editingStudentId: null
+};
+
+// تهيئة التطبيق
+document.addEventListener("DOMContentLoaded", () => {
+  loadData();
+  setupNavigation();
+  initAttendanceDefaults();
+  initReportDefaults();
+  setupKeyboardShortcuts();
+  renderApp();
+});
+
+/**
+ * نغمة صوتية رقيقة عند الحفظ (Web Audio API)
+ */
+function playSaveChime() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.36);
+  } catch (e) {}
+}
+
+function setupKeyboardShortcuts() {
+  window.addEventListener("keydown", (e) => {
+    if (state.activeTab === "attendance" && state.checkInMode === "single") {
+      if (e.key === "Enter" && !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        saveSingleStudentAttendance(true);
+      }
+    }
+  });
+}
+
+function loadData() {
+  try {
+    const saved = localStorage.getItem("prep_meeting_db_v1");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state.students = parsed.students || [];
+      state.records = parsed.records || {};
+      state.settings = { ...state.settings, ...(parsed.settings || {}) };
+      // تحديث اسم الكنيسة تلقائياً إذا كان القديم أو فارغاً
+      if (!state.settings.churchName || state.settings.churchName.includes("مارمرقس")) {
+        state.settings.churchName = "كنيسة الشهيد العظيم مارمينا العجائبي";
+        saveData(true);
+      }
+    } else if (typeof SAMPLE_DATA !== "undefined") {
+      state.students = [...SAMPLE_DATA.students];
+      state.records = JSON.parse(JSON.stringify(SAMPLE_DATA.records));
+      state.settings = { ...state.settings, ...SAMPLE_DATA.settings };
+      state.settings.churchName = "كنيسة الشهيد العظيم مارمينا العجائبي";
+      saveData(true);
+    }
+  } catch (e) {
+    console.error("Error loading data:", e);
+    if (typeof SAMPLE_DATA !== "undefined") {
+      state.students = [...SAMPLE_DATA.students];
+      state.records = JSON.parse(JSON.stringify(SAMPLE_DATA.records));
+    }
+  }
+}
+
+function saveData(silent = false) {
+  try {
+    const dataToSave = {
+      students: state.students,
+      records: state.records,
+      settings: state.settings,
+      savedAt: new Date().toISOString()
+    };
+    localStorage.setItem("prep_meeting_db_v1", JSON.stringify(dataToSave));
+
+    // مزامنة فورية مع Firebase السحابية لكل الأجهزة
+    if (window.FirebaseSync && typeof window.FirebaseSync.pushUpdate === "function") {
+      window.FirebaseSync.pushUpdate(dataToSave);
+    }
+
+    if (!silent) {
+      showToast("تم الحفظ بنجاح", "success");
+    }
+  } catch (e) {
+    console.error("Error saving data:", e);
+    showToast("خطأ في حفظ البيانات", "error");
+  }
+}
+
+function initAttendanceDefaults() {
+  const today = new Date().toISOString().split("T")[0];
+  state.currentDate = today;
+  const dateInput = document.getElementById("attDateInput");
+  if (dateInput) dateInput.value = today;
+}
+
+function initReportDefaults() {
+  const now = new Date();
+  const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split("T")[0];
+  const today = now.toISOString().split("T")[0];
+
+  state.reportStartDate = firstDayOfMonth;
+  state.reportEndDate = today;
+
+  const startInput = document.getElementById("reportStartDate");
+  const endInput = document.getElementById("reportEndDate");
+  if (startInput) startInput.value = firstDayOfMonth;
+  if (endInput) endInput.value = today;
+}
+
+function setupNavigation() {
+  document.querySelectorAll("[data-nav-tab]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      switchTab(btn.getAttribute("data-nav-tab"));
+    });
+  });
+}
+
+function switchTab(tabId) {
+  state.activeTab = tabId;
+  document.querySelectorAll("[data-nav-tab]").forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-nav-tab") === tabId);
+  });
+  document.querySelectorAll(".tab-content-panel").forEach(panel => {
+    panel.classList.toggle("hidden", panel.id !== `tab-${tabId}`);
+  });
+
+  if (tabId === "attendance") renderAttendanceTab();
+  else if (tabId === "reports") renderReportsTab();
+  else if (tabId === "students") renderStudentsTab();
+  else if (tabId === "history") renderHistoryTab();
+  else if (tabId === "settings") renderSettingsTab();
+}
+
+function renderApp() {
+  const churchEl = document.getElementById("headerChurchName");
+  const meetingEl = document.getElementById("headerMeetingName");
+  if (churchEl) churchEl.textContent = state.settings.churchName;
+  if (meetingEl) meetingEl.textContent = state.settings.meetingName;
+
+  switchTab(state.activeTab);
+}
+
+// ========================================================
+// 1. شاشة تسجيل الحضور: يدوي 100% لكل طالب
+// ========================================================
+
+function renderAttendanceTab() {
+  const dateInput = document.getElementById("attDateInput");
+  if (dateInput && dateInput.value !== state.currentDate) {
+    dateInput.value = state.currentDate;
+  }
+
+  const d = new Date(state.currentDate);
+  const dayOfWeek = d.getDay();
+  const dayNames = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+  const dayName = dayNames[dayOfWeek];
+
+  const dayNameEl = document.getElementById("currentDayDisplay");
+  if (dayNameEl) {
+    dayNameEl.innerHTML = `<span>تسجيل حضور يوم <strong>${dayName}</strong> (${state.currentDate})</span>`;
+  }
+
+  // التأكد من وجود سجل للتاريخ دون تحضير أي شخص
+  if (!state.records[state.currentDate]) {
+    state.records[state.currentDate] = {
+      date: state.currentDate,
+      activities: {}
+    };
+  }
+
+  ensureSelectedStudent();
+
+  if (state.checkInMode === "single") {
+    renderSingleStudentKiosk();
+  } else {
+    renderAttendanceTableView();
+  }
+}
+
+function setCheckInMode(mode) {
+  state.checkInMode = mode;
+  const btnSingle = document.getElementById("btnModeSingle");
+  const btnTable = document.getElementById("btnModeTable");
+  if (btnSingle) btnSingle.classList.toggle("active", mode === "single");
+  if (btnTable) btnTable.classList.toggle("active", mode === "table");
+  renderAttendanceTab();
+}
+
+function ensureSelectedStudent() {
+  const filtered = getFilteredAttendanceStudents();
+  if (filtered.length === 0) {
+    state.selectedStudentId = null;
+    state.singleStudentDraftActivities = {};
+    return;
+  }
+  const exists = filtered.find(s => s.id === state.selectedStudentId);
+  if (!exists) {
+    state.selectedStudentId = filtered[0].id;
+  }
+  syncSingleStudentDraft();
+}
+
+/**
+ * مزامنة حالة الطالب الحالي فقط:
+ * إذا كان الطالب غير مسجل بعد في هذا اليوم، تصبح كل الاختيارات فارغة (غائب)
+ */
+function syncSingleStudentDraft() {
+  state.singleStudentDraftActivities = {};
+  if (!state.selectedStudentId) return;
+
+  const dayRecord = state.records[state.currentDate];
+  if (!dayRecord || !dayRecord.activities) return;
+
+  Object.keys(ACTIVITIES).forEach(actId => {
+    const list = dayRecord.activities[actId] || [];
+    if (list.includes(state.selectedStudentId)) {
+      state.singleStudentDraftActivities[actId] = true;
+    }
+  });
+}
+
+function getFilteredAttendanceStudents() {
+  let list = state.students.filter(std => {
+    const matchGrade = state.attendanceFilterGrade === "all" || std.grade === state.attendanceFilterGrade;
+    const matchSearch = !state.attendanceSearch || std.name.toLowerCase().includes(state.attendanceSearch.toLowerCase());
+    return matchGrade && matchSearch;
+  });
+  list.sort((a, b) => a.name.localeCompare(b.name, "ar"));
+  return list;
+}
+
+/**
+ * معرفة البنود التي سجل فيها طالب معين في التاريخ الحالي
+ */
+function getStudentRecordedActivities(studentId) {
+  const dayRecord = state.records[state.currentDate];
+  if (!dayRecord || !dayRecord.activities) return [];
+
+  const recorded = [];
+  Object.keys(ACTIVITIES).forEach(actId => {
+    if (dayRecord.activities[actId] && dayRecord.activities[actId].includes(studentId)) {
+      recorded.push(ACTIVITIES[actId]);
+    }
+  });
+  return recorded;
+}
+
+// ========================================================
+// وضع التسجيل الفردي (طالب بطالب - Kiosk Mode)
+// ========================================================
+
+function renderSingleStudentKiosk() {
+  const container = document.getElementById("attStudentsContainer");
+  if (!container) return;
+
+  const filtered = getFilteredAttendanceStudents();
+  const dayRecord = state.records[state.currentDate] || { activities: {} };
+
+  // حساب الحاضرين الفعليين لليوم
+  let uniquePresentIds = new Set();
+  Object.keys(dayRecord.activities || {}).forEach(actId => {
+    (dayRecord.activities[actId] || []).forEach(id => uniquePresentIds.add(id));
+  });
+
+  const presentCount = uniquePresentIds.size;
+  const absentCount = Math.max(0, state.students.length - presentCount);
+
+  // تحديث شريط الإحصائيات العلوي
+  const statsEl = document.getElementById("attQuickStats");
+  if (statsEl) {
+    statsEl.innerHTML = `
+      <div class="luxury-badge" style="border-color: #6ee7b7; color: #10b981;">
+        <span>✓</span> تم تسجيل حضورهم اليوم: <strong>${presentCount}</strong> طالب
+      </div>
+      <div class="luxury-badge" style="border-color: #fca5a5; color: #ef4444;">
+        <span>⚪</span> لم يُسجلوا بعد (غائبون): <strong>${absentCount}</strong> طالب
+      </div>
+    `;
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>لا يوجد طلاب مطابقين للبحث أو القسم</h3>
+        <p>جرب مسح شريط البحث أو اختيار قسم آخر.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const currentStudent = state.students.find(s => s.id === state.selectedStudentId) || filtered[0];
+  const currentIndex = filtered.findIndex(s => s.id === currentStudent.id);
+  const gradeInfo = GRADES[currentStudent.grade] || { name: currentStudent.grade, color: "#333", bg: "#eee" };
+
+  // فحص البنود المسجلة لهذا الطالب حالياً
+  const studentRecordedActs = getStudentRecordedActivities(currentStudent.id);
+  const isRecordedToday = studentRecordedActs.length > 0;
+
+  // الحروف الأولى للاسم
+  const initials = currentStudent.name.split(" ").slice(0, 2).map(w => w[0]).join("");
+
+  // تقسيم الطلاب إلى حاضرين وغير مسجلين لعرضهم بوضوح
+  const recordedStudents = filtered.filter(s => uniquePresentIds.has(s.id));
+  const unrecordedStudents = filtered.filter(s => !uniquePresentIds.has(s.id));
+
+  let html = `
+    <div class="single-checkin-wrapper">
+
+      <!-- شريط أدوات وتصفية الطلاب -->
+      <div class="student-selector-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="form-control" 
+            placeholder="اكتب اسم الطالب للوصول إليه وتسجيله فوراً..." 
+            value="${state.attendanceSearch}"
+            oninput="onAttendanceSearchChange(this.value)">
+        </div>
+
+        <div class="student-nav-arrows">
+          <button type="button" class="nav-arrow-btn" onclick="navigateStudent(-1)" title="الطالب السابق">
+            <span>◀</span> السابق
+          </button>
+          <span style="font-weight: 800; font-size: 0.95rem; color: var(--text-main); min-width: 80px; text-align: center;">
+            ${currentIndex + 1} من ${filtered.length}
+          </span>
+          <button type="button" class="nav-arrow-btn" onclick="navigateStudent(1)" title="الطالب التالي">
+            التالي <span>▶</span>
+          </button>
+        </div>
+
+        <div class="grade-filter-chips">
+          <button class="chip ${state.attendanceFilterGrade === 'all' ? 'active' : ''}" onclick="setAttendanceGradeFilter('all')">الكل (${state.students.length})</button>
+          <button class="chip ${state.attendanceFilterGrade === 'prep1' ? 'active' : ''}" onclick="setAttendanceGradeFilter('prep1')">أولى</button>
+          <button class="chip ${state.attendanceFilterGrade === 'prep2' ? 'active' : ''}" onclick="setAttendanceGradeFilter('prep2')">ثانية</button>
+          <button class="chip ${state.attendanceFilterGrade === 'prep3' ? 'active' : ''}" onclick="setAttendanceGradeFilter('prep3')">ثالثة</button>
+        </div>
+      </div>
+
+      <!-- بطاقة الطالب المحددة لتسجيل الحضور اليدوي -->
+      <div class="student-kiosk-card">
+        <div class="kiosk-student-header">
+          <div class="student-avatar-info">
+            <div class="student-avatar-circle" style="background: linear-gradient(135deg, ${gradeInfo.color}, #1e293b);">
+              ${initials}
+            </div>
+            <div class="student-meta-details">
+              <h2>${currentStudent.name}</h2>
+              <div class="sub-meta">
+                <span class="grade-badge" style="background-color: ${gradeInfo.bg}; color: ${gradeInfo.color}; font-size: 0.9rem;">
+                  ${gradeInfo.name}
+                </span>
+                ${currentStudent.phone ? `<span style="font-size: 0.9rem; color: var(--text-muted);">📞 ${currentStudent.phone}</span>` : ''}
+                ${currentStudent.notes ? `<span class="luxury-badge" style="font-size: 0.75rem; padding: 2px 8px;">📝 ${currentStudent.notes}</span>` : ''}
+              </div>
+            </div>
+          </div>
+
+          <!-- شارة حالة الطالب في هذا التاريخ -->
+          <div style="text-align: left;">
+            <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted); margin-bottom: 4px;">
+              حالة الطالب في تاريخ (${state.currentDate}):
+            </div>
+            ${isRecordedToday 
+              ? `<div style="font-size: 1.05rem; font-weight: 900; color: #059669; background: #ecfdf5; border: 1.5px solid #a7f3d0; padding: 4px 12px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px;">
+                   ✓ تم تسجيل حضوره في: ${studentRecordedActs.map(a => a.name).join(' + ')}
+                 </div>`
+              : `<div style="font-size: 0.95rem; font-weight: 800; color: #94a3b8; background: #f8fafc; border: 1.5px solid #cbd5e1; padding: 4px 12px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px;">
+                   ⚪ لم يسجل حضور حتى الآن (غائب)
+                 </div>`
+            }
+          </div>
+        </div>
+
+        <!-- اختيار بنود الحضور للطالب الحالي -->
+        <div style="margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">
+            <span style="font-weight: 900; font-size: 1.05rem; color: var(--royal-navy);">
+              اختر بيدك البنود التي حضرها الطالب "${currentStudent.name}" فقط (بند واحد أو أكثر):
+            </span>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700;">
+              (انقر على أي نشاط لتحديده أو إلغائه)
+            </span>
+          </div>
+
+          <!-- شبكة البنود الـ 6 متاحة دائماً بالكامل -->
+          <div class="student-activities-grid">
+  `;
+
+  Object.values(ACTIVITIES).forEach(act => {
+    const isChecked = !!state.singleStudentDraftActivities[act.id];
+
+    html += `
+      <div class="activity-check-tile ${isChecked ? 'checked' : ''}" onclick="toggleDraftActivity('${act.id}')">
+        <div class="tile-info-block">
+          <span class="tile-icon">${act.icon}</span>
+          <div class="tile-titles">
+            <span class="tile-name">${act.name}</span>
+            <span class="tile-day-hint">${act.dayName} - ${act.hint}</span>
+          </div>
+        </div>
+        <div class="luxury-switch"></div>
+      </div>
+    `;
+  });
+
+  html += `
+          </div>
+        </div>
+
+        <!-- أزرار الحفظ المباشر لهذا الطالب فقط -->
+        <div class="kiosk-actions-bar">
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+            <button type="button" class="btn-royal-save" onclick="saveSingleStudentAttendance(true)">
+              <span>✓ تم - حفظ حضور "${currentStudent.name}" والانتقال للتالي</span>
+              <span class="save-hotkey-hint">Enter ↵</span>
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary" onclick="saveSingleStudentAttendance(false)">
+              💾 تم - حفظ هذا الطالب فقط
+            </button>
+
+            <button type="button" class="btn btn-outline-danger btn-sm" onclick="markCurrentStudentAbsent()">
+              ✕ جعل هذا الطالب غائباً بالكامل
+            </button>
+          </div>
+
+          <button type="button" class="btn btn-outline-secondary" onclick="navigateStudent(1)">
+            تخطي إلى التالي ⏭️
+          </button>
+        </div>
+      </div>
+
+      <!-- قائمة الطلاب للتنقل السريع مع بيان من حضر ومن لم يحضر -->
+      <div class="luxury-card" style="padding: 1.25rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+          <span style="font-size: 0.95rem; font-weight: 900; color: var(--royal-navy);">
+            قائمة الطلاب (انقر على اسم أي طالب لاختياره وتسجيله بيدك):
+          </span>
+          <button type="button" class="btn btn-sm btn-outline-danger" onclick="resetDayAttendance()">
+            🔄 تصفير حضور هذا اليوم (الكل غائب)
+          </button>
+        </div>
+
+        <!-- قسم الطلاب غير المسجلين (غائبون) -->
+        <div style="margin-bottom: 1rem;">
+          <div style="font-size: 0.85rem; font-weight: 800; color: #dc2626; margin-bottom: 0.4rem;">
+            ⚪ طلاب لم يُسجلوا بعد اليوم (${unrecordedStudents.length}):
+          </div>
+          <div class="student-quick-pills">
+  `;
+
+  if (unrecordedStudents.length === 0) {
+    html += `<span style="font-size: 0.85rem; color: #059669; font-weight: bold;">🎉 رائع! تم تسجيل جميع الطلاب في هذا القسم.</span>`;
+  } else {
+    unrecordedStudents.forEach(s => {
+      const isSelected = s.id === currentStudent.id;
+      html += `
+        <button type="button" 
+          class="student-quick-pill ${isSelected ? 'current' : ''}"
+          onclick="selectStudentForCheckIn('${s.id}')">
+          ${s.name}
+        </button>
+      `;
+    });
+  }
+
+  html += `
+          </div>
+        </div>
+
+        <!-- قسم الطلاب الذين تم تسجيلهم اليوم (حاضرون) -->
+        <div>
+          <div style="font-size: 0.85rem; font-weight: 800; color: #059669; margin-bottom: 0.4rem;">
+            🟢 طلاب تم تسجيل حضورهم اليوم (${recordedStudents.length}):
+          </div>
+          <div class="student-quick-pills">
+  `;
+
+  if (recordedStudents.length === 0) {
+    html += `<span style="font-size: 0.85rem; color: var(--text-muted);">لم يتم تحضير أي طالب اليوم بعد. اختر طالباً من الأعلى واضغط "تم".</span>`;
+  } else {
+    recordedStudents.forEach(s => {
+      const isSelected = s.id === currentStudent.id;
+      const acts = getStudentRecordedActivities(s.id);
+      html += `
+        <button type="button" 
+          class="student-quick-pill has-records-today ${isSelected ? 'current' : ''}"
+          onclick="selectStudentForCheckIn('${s.id}')"
+          title="مسجل في: ${acts.map(a => a.name).join('، ')}">
+          ${s.name} (${acts.length})
+        </button>
+      `;
+    });
+  }
+
+  html += `
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+function toggleDraftActivity(actId) {
+  state.singleStudentDraftActivities[actId] = !state.singleStudentDraftActivities[actId];
+  renderSingleStudentKiosk();
+}
+
+/**
+ * حفظ حضور الطالب الحالي فقط في التاريخ المحدد
+ */
+function saveSingleStudentAttendance(advanceToNext = true) {
+  const student = state.students.find(s => s.id === state.selectedStudentId);
+  if (!student) return;
+
+  if (!state.records[state.currentDate]) {
+    state.records[state.currentDate] = { date: state.currentDate, activities: {} };
+  }
+  const dayRecord = state.records[state.currentDate];
+  if (!dayRecord.activities) dayRecord.activities = {};
+
+  const chosenActivityNames = [];
+
+  // تطبيق التعديل على هذا الطالب فقط دون المساس بباقي الطلاب
+  Object.keys(ACTIVITIES).forEach(actId => {
+    if (!dayRecord.activities[actId]) dayRecord.activities[actId] = [];
+    const list = dayRecord.activities[actId];
+    const isSelected = !!state.singleStudentDraftActivities[actId];
+    const exists = list.includes(student.id);
+
+    if (isSelected) {
+      chosenActivityNames.push(ACTIVITIES[actId].name);
+      if (!exists) list.push(student.id);
+    } else if (exists) {
+      const idx = list.indexOf(student.id);
+      if (idx > -1) list.splice(idx, 1);
+    }
+  });
+
+  saveData(true);
+  playSaveChime();
+
+  if (chosenActivityNames.length > 0) {
+    showToast(`✓ تم تسجيل حضور "${student.name}" في (${chosenActivityNames.join(' + ')}) فقط!`, "success");
+  } else {
+    showToast(`تم حفظ "${student.name}" كـ غائب (لم يتم تحديد أي بند)`, "info");
+  }
+
+  if (advanceToNext) {
+    navigateStudent(1);
+  } else {
+    renderSingleStudentKiosk();
+  }
+}
+
+/**
+ * تسجيل الطالب الحالي غائباً في كل البنود
+ */
+function markCurrentStudentAbsent() {
+  const student = state.students.find(s => s.id === state.selectedStudentId);
+  if (!student) return;
+
+  state.singleStudentDraftActivities = {};
+
+  const dayRecord = state.records[state.currentDate];
+  if (dayRecord && dayRecord.activities) {
+    Object.keys(ACTIVITIES).forEach(actId => {
+      const list = dayRecord.activities[actId];
+      if (list) {
+        const idx = list.indexOf(student.id);
+        if (idx > -1) list.splice(idx, 1);
+      }
+    });
+  }
+
+  saveData(true);
+  showToast(`تم تعيين الطالب "${student.name}" كـ غائب في هذا اليوم`, "info");
+  renderSingleStudentKiosk();
+}
+
+/**
+ * تصفير سجل اليوم كاملاً بحيث يصبح كل الطلاب غائبين
+ */
+function resetDayAttendance() {
+  if (confirm(`هل أنت متأكد من تصفير حضور يوم ${state.currentDate} وجعل جميع الطلاب غائبين؟`)) {
+    state.records[state.currentDate] = {
+      date: state.currentDate,
+      activities: {}
+    };
+    state.singleStudentDraftActivities = {};
+    saveData(true);
+    renderAttendanceTab();
+    showToast("تم تصفير حضور اليوم بالكامل، جميع الطلاب غائبون الآن", "info");
+  }
+}
+
+function navigateStudent(direction) {
+  const filtered = getFilteredAttendanceStudents();
+  if (filtered.length === 0) return;
+
+  let currentIndex = filtered.findIndex(s => s.id === state.selectedStudentId);
+  if (currentIndex === -1) currentIndex = 0;
+
+  let nextIndex = currentIndex + direction;
+  if (nextIndex >= filtered.length) {
+    showToast("تم الوصول لآخر طالب في القائمة! 👏", "info");
+    nextIndex = 0;
+  } else if (nextIndex < 0) {
+    nextIndex = filtered.length - 1;
+  }
+
+  state.selectedStudentId = filtered[nextIndex].id;
+  syncSingleStudentDraft();
+  renderSingleStudentKiosk();
+}
+
+function selectStudentForCheckIn(studentId) {
+  state.selectedStudentId = studentId;
+  syncSingleStudentDraft();
+  renderSingleStudentKiosk();
+}
+
+// ========================================================
+// وضع عرض الجدول الشامل (Table View)
+// ========================================================
+
+function renderAttendanceTableView() {
+  const container = document.getElementById("attStudentsContainer");
+  if (!container) return;
+
+  const dayRecord = state.records[state.currentDate] || { activities: {} };
+  const filtered = getFilteredAttendanceStudents();
+
+  let html = `
+    <div class="luxury-card" style="padding: 1.25rem;">
+      <div class="table-actions-header" style="background: none; border-bottom: 1px solid var(--border-light); padding: 0 0 1rem 0;">
+        <span style="font-weight: 800; color: var(--text-main);">
+          اضغط على حالة الطالب (حاضر / غائب) في أي بند لتسجيله بيدك:
+        </span>
+        <div class="grade-filter-chips">
+          <button class="chip ${state.attendanceFilterGrade === 'all' ? 'active' : ''}" onclick="setAttendanceGradeFilter('all')">الكل (${state.students.length})</button>
+          <button class="chip ${state.attendanceFilterGrade === 'prep1' ? 'active' : ''}" onclick="setAttendanceGradeFilter('prep1')">أولى إعدادي</button>
+          <button class="chip ${state.attendanceFilterGrade === 'prep2' ? 'active' : ''}" onclick="setAttendanceGradeFilter('prep2')">ثانية إعدادي</button>
+          <button class="chip ${state.attendanceFilterGrade === 'prep3' ? 'active' : ''}" onclick="setAttendanceGradeFilter('prep3')">ثالثة إعدادي</button>
+        </div>
+      </div>
+
+      <div class="table-responsive" style="margin-top: 1rem;">
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">م</th>
+              <th>اسم الطالب</th>
+              <th style="width: 140px;">القسم</th>
+  `;
+
+  Object.values(ACTIVITIES).forEach(act => {
+    const attendedCount = (dayRecord.activities[act.id] || []).length;
+    html += `
+      <th style="text-align: center; min-width: 130px;">
+        <div>${act.icon} ${act.name}</div>
+        <div class="th-subtext">حاضر: ${attendedCount} / ${state.students.length}</div>
+      </th>
+    `;
+  });
+
+  html += `
+            </tr>
+          </thead>
+          <tbody>
+  `;
+
+  filtered.forEach((student, index) => {
+    const gradeInfo = GRADES[student.grade] || { name: student.grade, color: "#333", bg: "#eee" };
+
+    html += `
+      <tr>
+        <td class="text-muted text-center">${index + 1}</td>
+        <td>
+          <span class="font-bold" style="cursor: pointer; color: var(--royal-blue);" onclick="switchToSingleStudent('${student.id}')" title="فتح شاشة التسجيل الفردي لهذا الطالب">
+            ${student.name} 🎯
+          </span>
+        </td>
+        <td>
+          <span class="grade-badge" style="background-color: ${gradeInfo.bg}; color: ${gradeInfo.color};">
+            ${gradeInfo.name}
+          </span>
+        </td>
+    `;
+
+    Object.values(ACTIVITIES).forEach(act => {
+      const isAttended = (dayRecord.activities[act.id] || []).includes(student.id);
+
+      html += `
+        <td class="text-center">
+          <button type="button" 
+            class="attendance-toggle-btn ${isAttended ? 'is-present' : 'is-absent'}"
+            onclick="toggleStudentAttendance('${student.id}', '${act.id}')">
+            ${isAttended ? `✓ حاضر` : `✕ غائب`}
+          </button>
+        </td>
+      `;
+    });
+
+    html += `</tr>`;
+  });
+
+  html += `
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+function switchToSingleStudent(studentId) {
+  state.selectedStudentId = studentId;
+  setCheckInMode("single");
+}
+
+function toggleStudentAttendance(studentId, activityId) {
+  if (!state.records[state.currentDate]) {
+    state.records[state.currentDate] = { date: state.currentDate, activities: {} };
+  }
+  const dayRecord = state.records[state.currentDate];
+  if (!dayRecord.activities[activityId]) dayRecord.activities[activityId] = [];
+
+  const list = dayRecord.activities[activityId];
+  const idx = list.indexOf(studentId);
+
+  if (idx > -1) {
+    list.splice(idx, 1);
+  } else {
+    list.push(studentId);
+    playSaveChime();
+  }
+
+  saveData(true);
+  renderAttendanceTableView();
+}
+
+function setAttendanceGradeFilter(grade) {
+  state.attendanceFilterGrade = grade;
+  ensureSelectedStudent();
+  renderAttendanceTab();
+}
+
+function onAttendanceDateChange(newDate) {
+  state.currentDate = newDate;
+  ensureSelectedStudent();
+  renderAttendanceTab();
+}
+
+function onAttendanceSearchChange(query) {
+  state.attendanceSearch = query.trim();
+  const filtered = getFilteredAttendanceStudents();
+  if (filtered.length > 0 && !filtered.some(s => s.id === state.selectedStudentId)) {
+    state.selectedStudentId = filtered[0].id;
+    syncSingleStudentDraft();
+  }
+  if (state.checkInMode === "single") {
+    renderSingleStudentKiosk();
+  } else {
+    renderAttendanceTableView();
+  }
+}
+
+function initReportDefaults() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  // أول يوم في الشهر الحالي
+  const firstDayOfMonth = new Date(year, month, 1).toISOString().split("T")[0];
+  // نهاية الشهر الحالي بالكامل (يشمل الأيام المستقبلية في الشهر تلقائياً)
+  const lastDayOfMonth = new Date(year, month + 1, 0).toISOString().split("T")[0];
+
+  state.reportStartDate = firstDayOfMonth;
+  state.reportEndDate = lastDayOfMonth;
+
+  const startInput = document.getElementById("reportStartDate");
+  const endInput = document.getElementById("reportEndDate");
+  if (startInput) startInput.value = firstDayOfMonth;
+  if (endInput) endInput.value = lastDayOfMonth;
+}
+
+// ========================================================
+// 2. شاشة التقارير الشاملة والحساب التلقائي لأيام التقويم
+// ========================================================
+
+/**
+ * حساب عدد الأيام لكل يوم من أيام الأسبوع في الفترة المحددة بدقة تقويمية
+ * (يحسب تلقائياً سواء في الماضي أو المستقبل، ومجرد زيادة التواريخ تزيد الأيام والفعاليات فوراً)
+ */
+function countCalendarDaysInRange(startDateStr, endDateStr) {
+  if (!startDateStr || !endDateStr) {
+    return { totalDays: 0, tuesdays: 0, sundays: 0, thursdays: 0, fridays: 0, mondays: 0, wednesdays: 0, saturdays: 0 };
+  }
+
+  const [sY, sM, sD] = startDateStr.split('-').map(Number);
+  const [eY, eM, eD] = endDateStr.split('-').map(Number);
+
+  // استخدام UTC لضمان الدقة وتفادي أي فروق في التوقيت
+  const start = new Date(Date.UTC(sY, sM - 1, sD));
+  const end = new Date(Date.UTC(eY, eM - 1, eD));
+
+  const days = {
+    totalDays: 0,
+    tuesdays: 0,  // الثلاثاء: اجتماع إعدادي
+    sundays: 0,   // الأحد: أجبية + سلوك + كتاب مقدس
+    thursdays: 0, // الخميس: تسبحة
+    fridays: 0,   // الجمعة: قداس إلهي
+    mondays: 0,
+    wednesdays: 0,
+    saturdays: 0
+  };
+
+  if (start > end) return days;
+
+  let curr = new Date(start);
+  while (curr <= end) {
+    days.totalDays++;
+    const day = curr.getUTCDay(); // 0 = الأحد, 2 = الثلاثاء, 4 = الخميس, 5 = الجمعة
+    if (day === 0) days.sundays++;
+    else if (day === 1) days.mondays++;
+    else if (day === 2) days.tuesdays++;
+    else if (day === 3) days.wednesdays++;
+    else if (day === 4) days.thursdays++;
+    else if (day === 5) days.fridays++;
+    else if (day === 6) days.saturdays++;
+    curr.setUTCDate(curr.getUTCDate() + 1);
+  }
+
+  return days;
+}
+
+function calculateReportData(startDate, endDate, gradeFilter) {
+  // حساب أيام الأسبوع التقويمية التي تقع في هذه الفترة بالكامل (مستقبلياً وحالياً)
+  const calDays = countCalendarDaysInRange(startDate, endDate);
+
+  // حساب الفعاليات تلقائياً بناءً على التواريخ المحددة:
+  // لو زودنا تاريخ النهاية تزيد الفعاليات تلقائياً وتزيد الحسبة مباشرة
+  const counts = {
+    meeting: calDays.tuesdays,
+    agpeya: calDays.sundays,
+    behavior: calDays.sundays,
+    bible: calDays.sundays,
+    tasbeha: calDays.thursdays,
+    vespers: calDays.thursdays,
+    confession: calDays.thursdays,
+    liturgy: calDays.fridays
+  };
+
+  const totalEventsPossible = counts.meeting + counts.agpeya + counts.behavior + counts.bible + counts.tasbeha + counts.vespers + counts.confession + counts.liturgy;
+
+  // التواريخ المسجلة فعلياً في قاعدة البيانات داخل هذه الفترة
+  const recordDates = Object.keys(state.records).filter(date => {
+    return (!startDate || date >= startDate) && (!endDate || date <= endDate);
+  });
+
+  const targetStudents = state.students.filter(std => {
+    return gradeFilter === "all" || std.grade === gradeFilter;
+  });
+
+  const studentsReport = targetStudents.map(student => {
+    let meetingCount = 0;
+    let agpeyaCount = 0;
+    let behaviorCount = 0;
+    let bibleCount = 0;
+    let tasbehaCount = 0;
+    let vespersCount = 0;
+    let confessionCount = 0;
+    let liturgyCount = 0;
+
+    recordDates.forEach(date => {
+      const day = state.records[date];
+      if (day && day.activities) {
+        if (day.activities.meeting && day.activities.meeting.includes(student.id)) meetingCount++;
+        if (day.activities.agpeya && day.activities.agpeya.includes(student.id)) agpeyaCount++;
+        if (day.activities.behavior && day.activities.behavior.includes(student.id)) behaviorCount++;
+        if (day.activities.bible && day.activities.bible.includes(student.id)) bibleCount++;
+        if (day.activities.tasbeha && day.activities.tasbeha.includes(student.id)) tasbehaCount++;
+        if (day.activities.vespers && day.activities.vespers.includes(student.id)) vespersCount++;
+        if (day.activities.confession && day.activities.confession.includes(student.id)) confessionCount++;
+        if (day.activities.liturgy && day.activities.liturgy.includes(student.id)) liturgyCount++;
+      }
+    });
+
+    const totalAttended = meetingCount + agpeyaCount + behaviorCount + bibleCount + tasbehaCount + vespersCount + confessionCount + liturgyCount;
+    const percentage = totalEventsPossible > 0 ? Math.round((totalAttended / totalEventsPossible) * 100) : 0;
+
+    let evaluation = "يحتاج متابعة ⚠️";
+    let evalClass = "eval-low";
+    if (percentage >= 85) {
+      evaluation = "ممتاز 🌟";
+      evalClass = "eval-excellent";
+    } else if (percentage >= 70) {
+      evaluation = "جيد جداً 👍";
+      evalClass = "eval-verygood";
+    } else if (percentage >= 50) {
+      evaluation = "جيد 👏";
+      evalClass = "eval-good";
+    }
+
+    return {
+      id: student.id,
+      name: student.name,
+      grade: student.grade,
+      gradeLabel: (GRADES[student.grade] && GRADES[student.grade].name) || student.grade,
+      phone: student.phone || "",
+      meetingCount,
+      agpeyaCount,
+      behaviorCount,
+      bibleCount,
+      tasbehaCount,
+      vespersCount,
+      confessionCount,
+      liturgyCount,
+      totalAttended,
+      percentage,
+      evaluation,
+      evalClass
+    };
+  });
+
+  studentsReport.sort((a, b) => b.percentage - a.percentage || b.totalAttended - a.totalAttended || a.name.localeCompare(b.name, "ar"));
+
+  const sumPercent = studentsReport.reduce((acc, curr) => acc + curr.percentage, 0);
+  const averageAttendance = studentsReport.length > 0 ? Math.round(sumPercent / studentsReport.length) : 0;
+
+  let gradeLabel = "جميع المراحل (أولى وثانية وثالثة إعدادي)";
+  if (gradeFilter === "prep1") gradeLabel = "سنة أولى إعدادي";
+  else if (gradeFilter === "prep2") gradeLabel = "سنة ثانية إعدادي";
+  else if (gradeFilter === "prep3") gradeLabel = "سنة ثالثة إعدادي";
+
+  return {
+    startDate: startDate || (recordDates.length > 0 ? recordDates[0] : "بداية الفترة"),
+    endDate: endDate || (recordDates.length > 0 ? recordDates[recordDates.length - 1] : "نهاية الفترة"),
+    gradeFilter,
+    gradeLabel,
+    calDays,
+    counts,
+    totalEventsPossible,
+    totalSessionsRecorded: recordDates.length,
+    studentsReport,
+    averageAttendance
+  };
+}
+
+function renderReportsTab() {
+  const startDateInput = document.getElementById("reportStartDate");
+  const endDateInput = document.getElementById("reportEndDate");
+  const gradeSelect = document.getElementById("reportGradeFilter");
+
+  const startDate = startDateInput ? startDateInput.value : state.reportStartDate;
+  const endDate = endDateInput ? endDateInput.value : state.reportEndDate;
+  const grade = gradeSelect ? gradeSelect.value : state.reportFilterGrade;
+
+  const reportData = calculateReportData(startDate, endDate, grade);
+  state.lastCalculatedReport = reportData;
+
+  const summaryContainer = document.getElementById("reportEventsSummary");
+  if (summaryContainer) {
+    const c = reportData.calDays;
+    summaryContainer.innerHTML = `
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">👥</div>
+        <div class="kpi-val">${reportData.counts.meeting}</div>
+        <div class="kpi-title">حضور الاجتماع (${c.tuesdays} ثلاثاء)</div>
+      </div>
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">📖</div>
+        <div class="kpi-val">${reportData.counts.agpeya}</div>
+        <div class="kpi-title">صلاة الأجبية (${c.sundays} أحد)</div>
+      </div>
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">⭐</div>
+        <div class="kpi-val">${reportData.counts.behavior}</div>
+        <div class="kpi-title">السلوك (${c.sundays} أحد)</div>
+      </div>
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">✝️</div>
+        <div class="kpi-val">${reportData.counts.bible}</div>
+        <div class="kpi-title">الكتاب المقدس (${c.sundays} أحد)</div>
+      </div>
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">🕯️</div>
+        <div class="kpi-val">${reportData.counts.tasbeha}</div>
+        <div class="kpi-title">التسبحة (${c.thursdays} خميس)</div>
+      </div>
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">✨</div>
+        <div class="kpi-val">${reportData.counts.vespers}</div>
+        <div class="kpi-title">العشية (${c.thursdays} خميس)</div>
+      </div>
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">🕊️</div>
+        <div class="kpi-val">${reportData.counts.confession}</div>
+        <div class="kpi-title">الاعتراف (${c.thursdays} خميس)</div>
+      </div>
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">⛪</div>
+        <div class="kpi-val">${reportData.counts.liturgy}</div>
+        <div class="kpi-title">القداس الإلهي (${c.fridays} جمعة)</div>
+      </div>
+      <div class="kpi-card highlight-success">
+        <div class="kpi-icon">🎯</div>
+        <div class="kpi-val">${reportData.totalEventsPossible}</div>
+        <div class="kpi-title">إجمالي الفعاليات في الفترة</div>
+      </div>
+      <div class="kpi-card highlight-success">
+        <div class="kpi-icon">📊</div>
+        <div class="kpi-val">${reportData.averageAttendance}%</div>
+        <div class="kpi-title">متوسط الحضور العام</div>
+      </div>
+    `;
+  }
+
+  const tableContainer = document.getElementById("reportTableContainer");
+  if (!tableContainer) return;
+
+  if (reportData.studentsReport.length === 0) {
+    tableContainer.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <h3>لا توجد بيانات للعرض في هذه الفترة أو القسم</h3>
+      </div>
+    `;
+    return;
+  }
+
+  const c = reportData.calDays;
+
+  let html = `
+    <!-- بطاقة توضيح حساب أيام الأسبوع التقويمية في الفترة المحددة -->
+    <div class="luxury-card" style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border: 1.5px solid #a7f3d0; padding: 1.15rem 1.5rem; margin-bottom: 1.25rem;">
+      <div style="font-weight: 900; color: #065f46; font-size: 1rem; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem;">
+        <span>📅</span>
+        <span>تفصيل الأيام التلقائي في الفترة من <strong>${reportData.startDate}</strong> إلى <strong>${reportData.endDate}</strong> (${c.totalDays} يوماً تقويمياً):</span>
+      </div>
+      <div style="font-size: 0.9rem; color: #047857; font-weight: 700; line-height: 1.8;">
+        مرّ في هذه الفترة تلقائياً: 
+        <strong>(${c.tuesdays})</strong> أيام ثلاثاء للاجتماع &bull; 
+        <strong>(${c.sundays})</strong> أيام أحد (أجبية + سلوك + كتاب مقدس) &bull; 
+        <strong>(${c.thursdays})</strong> أيام خميس (تسبحة + عشية + اعتراف) &bull; 
+        <strong>(${c.fridays})</strong> أيام جمعة للقداس الإلهي.
+        <br>
+        المجموع الإجمالي للفرص والفعاليات الروحية في هذه الفترة = <strong>${reportData.totalEventsPossible}</strong> فعالية.
+      </div>
+    </div>
+
+    <div class="report-header-banner">
+      <div class="banner-title">
+        <h3>✠ تقرير متابعة الحضور والأنشطة: ${reportData.gradeLabel}</h3>
+        <p>الفترة من <strong>${reportData.startDate}</strong> إلى <strong>${reportData.endDate}</strong> (${reportData.studentsReport.length} طالب)</p>
+      </div>
+      <div class="banner-actions">
+        <button type="button" class="btn btn-gold" onclick="exportReportToWord()">
+          <span style="font-size: 1.15rem;">📄</span> تحميل تقرير وورد (Word .docx)
+        </button>
+        <button type="button" class="btn btn-outline-secondary" onclick="window.print()">
+          <span>🖨️</span> طباعة التقرير
+        </button>
+        <button type="button" class="btn btn-outline-secondary" onclick="exportReportToCSV()">
+          <span>📑</span> تصدير Excel
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th style="width: 45px;">م</th>
+            <th>اسم الطالب</th>
+            <th style="width: 120px;">القسم</th>
+            <th style="text-align: center;">الاجتماع <span class="badge-total">${reportData.counts.meeting} ثلاثاء</span></th>
+            <th style="text-align: center;">الأجبية <span class="badge-total">${reportData.counts.agpeya} أحد</span></th>
+            <th style="text-align: center;">السلوك <span class="badge-total">${reportData.counts.behavior} أحد</span></th>
+            <th style="text-align: center;">الكتاب المقدس <span class="badge-total">${reportData.counts.bible} أحد</span></th>
+            <th style="text-align: center;">التسبحة <span class="badge-total">${reportData.counts.tasbeha} خميس</span></th>
+            <th style="text-align: center;">العشية <span class="badge-total">${reportData.counts.vespers} خميس</span></th>
+            <th style="text-align: center;">الاعتراف <span class="badge-total">${reportData.counts.confession} خميس</span></th>
+            <th style="text-align: center;">القداس <span class="badge-total">${reportData.counts.liturgy} جمعة</span></th>
+            <th style="width: 120px; text-align: center;">المجموع الكلي</th>
+            <th style="width: 90px; text-align: center;">النسبة</th>
+            <th style="width: 120px; text-align: center;">التقييم</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  reportData.studentsReport.forEach((student, index) => {
+    const isTopStudent = index < 3 && student.percentage >= 80;
+    const gradeInfo = GRADES[student.grade] || { name: student.grade, color: "#333", bg: "#eee" };
+
+    html += `
+      <tr class="${isTopStudent ? 'top-student-row' : ''}">
+        <td class="text-center text-muted">
+          ${isTopStudent ? '🥇 ' : ''}${index + 1}
+        </td>
+        <td>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="font-bold">${student.name}</span>
+            ${isTopStudent ? `<span class="luxury-badge" style="font-size: 0.7rem; padding: 2px 6px;">متميز</span>` : ''}
+          </div>
+        </td>
+        <td>
+          <span class="grade-badge" style="background-color: ${gradeInfo.bg}; color: ${gradeInfo.color};">
+            ${gradeInfo.name}
+          </span>
+        </td>
+        <td class="text-center font-medium">
+          <span class="count-box">${student.meetingCount}</span> <span class="count-max">من ${reportData.counts.meeting}</span>
+        </td>
+        <td class="text-center font-medium">
+          <span class="count-box">${student.agpeyaCount}</span> <span class="count-max">من ${reportData.counts.agpeya}</span>
+        </td>
+        <td class="text-center font-medium">
+          <span class="count-box">${student.behaviorCount}</span> <span class="count-max">من ${reportData.counts.behavior}</span>
+        </td>
+        <td class="text-center font-medium">
+          <span class="count-box">${student.bibleCount}</span> <span class="count-max">من ${reportData.counts.bible}</span>
+        </td>
+        <td class="text-center font-medium">
+          <span class="count-box">${student.tasbehaCount}</span> <span class="count-max">من ${reportData.counts.tasbeha}</span>
+        </td>
+        <td class="text-center font-medium">
+          <span class="count-box">${student.vespersCount}</span> <span class="count-max">من ${reportData.counts.vespers}</span>
+        </td>
+        <td class="text-center font-medium">
+          <span class="count-box">${student.confessionCount}</span> <span class="count-max">من ${reportData.counts.confession}</span>
+        </td>
+        <td class="text-center font-medium">
+          <span class="count-box">${student.liturgyCount}</span> <span class="count-max">من ${reportData.counts.liturgy}</span>
+        </td>
+        <td class="text-center font-bold total-cell">
+          ${student.totalAttended} <span class="text-muted">من ${reportData.totalEventsPossible}</span>
+        </td>
+        <td class="text-center">
+          <div class="percentage-wrap">
+            <div class="progress-bar-mini">
+              <div class="progress-fill" style="width: ${student.percentage}%;"></div>
+            </div>
+            <span class="percent-text">${student.percentage}%</span>
+          </div>
+        </td>
+        <td class="text-center">
+          <span class="eval-badge ${student.evalClass}">
+            ${student.evaluation}
+          </span>
+        </td>
+      </tr>
+    `;
+  });
+
+  html += `
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  tableContainer.innerHTML = html;
+}
+function exportReportToWord() {
+  const reportData = state.lastCalculatedReport;
+  if (!reportData || reportData.studentsReport.length === 0) {
+    showToast("لا توجد بيانات لتصديرها", "warning");
+    return;
+  }
+  showToast("جاري إعداد وتحميل ملف Word الفاخر...", "info");
+  DocxExporter.exportReport(reportData, state.settings);
+}
+
+function exportReportToCSV() {
+  const report = state.lastCalculatedReport;
+  if (!report || report.studentsReport.length === 0) return;
+
+  let csv = "\uFEFF";
+  csv += `كنيسة: ${state.settings.churchName} - اجتماع: ${state.settings.meetingName}\n`;
+  csv += `تقرير حضور: ${report.gradeLabel} من ${report.startDate} إلى ${report.endDate}\n\n`;
+  csv += `م,اسم الطالب,القسم,حضور الاجتماع (${report.counts.meeting}),الأجبية (${report.counts.agpeya}),السلوك (${report.counts.behavior}),الكتاب المقدس (${report.counts.bible}),التسبحة (${report.counts.tasbeha}),العشية (${report.counts.vespers}),الاعتراف (${report.counts.confession}),القداس (${report.counts.liturgy}),المجموع الكلي (${report.totalEventsPossible}),النسبة %,التقييم\n`;
+
+  report.studentsReport.forEach((s, idx) => {
+    csv += `${idx + 1},"${s.name}","${s.gradeLabel}",${s.meetingCount},${s.agpeyaCount},${s.behaviorCount},${s.bibleCount},${s.tasbehaCount},${s.vespersCount},${s.confessionCount},${s.liturgyCount},${s.totalAttended},${s.percentage}%,${s.evaluation.replace(/[^\u0600-\u06FF\s]/g, '')}\n`;
+  });
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  DocxExporter.downloadBlob(blob, `تقرير_إعدادي_${report.startDate}_${report.endDate}.csv`);
+}
+
+/**
+ * تحديد فترات سريعة للتقرير (تشمل حسابات مستقبلية كاملة للشهر والفترات المحددة)
+ */
+function setReportDateRange(type) {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  let start, end;
+
+  if (type === "this_month") {
+    // هذا الشهر بالكامل (من 1 إلى آخر يوم في الشهر)
+    start = new Date(year, month, 1);
+    end = new Date(year, month + 1, 0);
+  } else if (type === "period_22_21") {
+    // فترة مخصصة من يوم 22 إلى 21 في الشهر التالي
+    start = new Date(year, month, 22);
+    end = new Date(year, month + 1, 21);
+  } else if (type === "next_month") {
+    // الشهر القادم بالكامل
+    start = new Date(year, month + 1, 1);
+    end = new Date(year, month + 2, 0);
+  } else if (type === "this_week") {
+    const day = now.getDay();
+    start = new Date(now);
+    start.setDate(now.getDate() - day);
+    end = new Date(start);
+    end.setDate(start.getDate() + 6);
+  } else if (type === "last_30_days") {
+    start = new Date(now);
+    start.setDate(now.getDate() - 30);
+    end = new Date(now);
+  } else if (type === "all_time") {
+    start = new Date(2026, 0, 1);
+    end = new Date(2026, 11, 31);
+  }
+
+  const sStr = start.toISOString().split("T")[0];
+  const eStr = end.toISOString().split("T")[0];
+
+  const sInput = document.getElementById("reportStartDate");
+  const eInput = document.getElementById("reportEndDate");
+  if (sInput) sInput.value = sStr;
+  if (eInput) eInput.value = eStr;
+
+  state.reportStartDate = sStr;
+  state.reportEndDate = eStr;
+  renderReportsTab();
+}
+
+// ========================================================
+// 3. إدارة الطلاب
+// ========================================================
+
+function renderStudentsTab() {
+  const container = document.getElementById("studentsListContainer");
+  if (!container) return;
+
+  let filtered = state.students.filter(std => {
+    const matchGrade = state.studentFilterGrade === "all" || std.grade === state.studentFilterGrade;
+    const matchSearch = !state.studentSearch || std.name.toLowerCase().includes(state.studentSearch.toLowerCase());
+    return matchGrade && matchSearch;
+  });
+
+  filtered.sort((a, b) => a.name.localeCompare(b.name, "ar"));
+
+  const countAll = state.students.length;
+  const countP1 = state.students.filter(s => s.grade === "prep1").length;
+  const countP2 = state.students.filter(s => s.grade === "prep2").length;
+  const countP3 = state.students.filter(s => s.grade === "prep3").length;
+
+  const tabsEl = document.getElementById("studentGradeTabs");
+  if (tabsEl) {
+    tabsEl.innerHTML = `
+      <button class="chip ${state.studentFilterGrade === 'all' ? 'active' : ''}" onclick="setStudentGradeFilter('all')">الكل (${countAll})</button>
+      <button class="chip ${state.studentFilterGrade === 'prep1' ? 'active' : ''}" onclick="setStudentGradeFilter('prep1')">أولى إعدادي (${countP1})</button>
+      <button class="chip ${state.studentFilterGrade === 'prep2' ? 'active' : ''}" onclick="setStudentGradeFilter('prep2')">ثانية إعدادي (${countP2})</button>
+      <button class="chip ${state.studentFilterGrade === 'prep3' ? 'active' : ''}" onclick="setStudentGradeFilter('prep3')">ثالثة إعدادي (${countP3})</button>
+    `;
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">👤</div>
+        <h3>لا يوجد طلاب مضافين</h3>
+      </div>
+    `;
+    return;
+  }
+
+  let html = `
+    <div class="table-responsive">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th style="width: 50px;">م</th>
+            <th>اسم الطالب</th>
+            <th style="width: 150px;">القسم</th>
+            <th style="width: 140px;">رقم الهاتف</th>
+            <th>ملاحظات</th>
+            <th style="width: 150px; text-align: center;">إجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  filtered.forEach((std, idx) => {
+    const gradeInfo = GRADES[std.grade] || { name: std.grade, color: "#333", bg: "#eee" };
+    html += `
+      <tr>
+        <td class="text-center text-muted">${idx + 1}</td>
+        <td class="font-bold">${std.name}</td>
+        <td>
+          <span class="grade-badge" style="background-color: ${gradeInfo.bg}; color: ${gradeInfo.color};">
+            ${gradeInfo.name}
+          </span>
+        </td>
+        <td>${std.phone || '<span class="text-muted">-</span>'}</td>
+        <td><small class="text-muted">${std.notes || '-'}</small></td>
+        <td class="text-center">
+          <div style="display: flex; justify-content: center; gap: 0.4rem;">
+            <button type="button" class="btn-micro" onclick="switchToSingleStudent('${std.id}'); switchTab('attendance');" title="تسجيل حضور هذا الطالب فوراً">تسجيل 🎯</button>
+            <button type="button" class="btn-micro" onclick="openEditStudentModal('${std.id}')">تعديل ✏️</button>
+            <button type="button" class="btn-micro danger" onclick="deleteStudent('${std.id}')">حذف 🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+
+  html += `</tbody></table></div>`;
+  container.innerHTML = html;
+}
+
+function setStudentGradeFilter(grade) {
+  state.studentFilterGrade = grade;
+  renderStudentsTab();
+}
+
+function onStudentSearchChange(query) {
+  state.studentSearch = query.trim();
+  renderStudentsTab();
+}
+
+function openAddStudentModal() {
+  state.editingStudentId = null;
+  document.getElementById("studentModalTitle").textContent = "إضافة طالب جديد";
+  document.getElementById("studentNameInput").value = "";
+  document.getElementById("studentGradeSelect").value = "prep1";
+  document.getElementById("studentPhoneInput").value = "";
+  document.getElementById("studentNotesInput").value = "";
+  document.getElementById("studentModal").classList.remove("hidden");
+  document.getElementById("studentNameInput").focus();
+}
+
+function openEditStudentModal(id) {
+  const std = state.students.find(s => s.id === id);
+  if (!std) return;
+
+  state.editingStudentId = id;
+  document.getElementById("studentModalTitle").textContent = "تعديل بيانات الطالب";
+  document.getElementById("studentNameInput").value = std.name;
+  document.getElementById("studentGradeSelect").value = std.grade;
+  document.getElementById("studentPhoneInput").value = std.phone || "";
+  document.getElementById("studentNotesInput").value = std.notes || "";
+  document.getElementById("studentModal").classList.remove("hidden");
+}
+
+function closeStudentModal() {
+  document.getElementById("studentModal").classList.add("hidden");
+}
+
+function saveStudentForm(e) {
+  if (e) e.preventDefault();
+
+  const name = document.getElementById("studentNameInput").value.trim();
+  const grade = document.getElementById("studentGradeSelect").value;
+  const phone = document.getElementById("studentPhoneInput").value.trim();
+  const notes = document.getElementById("studentNotesInput").value.trim();
+
+  if (!name) {
+    showToast("يرجى إدخال اسم الطالب", "warning");
+    return;
+  }
+
+  if (state.editingStudentId) {
+    const std = state.students.find(s => s.id === state.editingStudentId);
+    if (std) {
+      std.name = name;
+      std.grade = grade;
+      std.phone = phone;
+      std.notes = notes;
+      showToast("تم تحديث بيانات الطالب بنجاح", "success");
+    }
+  } else {
+    const newStudent = {
+      id: "std-" + Date.now(),
+      name,
+      grade,
+      phone,
+      notes
+    };
+    state.students.push(newStudent);
+    showToast("تمت إضافة الطالب بنجاح", "success");
+  }
+
+  saveData();
+  closeStudentModal();
+  renderStudentsTab();
+}
+
+function deleteStudent(id) {
+  const std = state.students.find(s => s.id === id);
+  if (!std) return;
+
+  if (confirm(`هل أنت متأكد من حذف الطالب "${std.name}"؟`)) {
+    state.students = state.students.filter(s => s.id !== id);
+    saveData();
+    renderStudentsTab();
+    showToast("تم حذف الطالب", "info");
+  }
+}
+
+// ========================================================
+// 4. سجل الأيام السابقة
+// ========================================================
+
+function renderHistoryTab() {
+  const container = document.getElementById("historyListContainer");
+  if (!container) return;
+
+  const dates = Object.keys(state.records).sort().reverse();
+
+  if (dates.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📅</div>
+        <h3>لا توجد أيام مسجلة بعد</h3>
+        <p>قم بتسجيل الحضور لأي يوم من تبويب "تسجيل الحضور اليومي" ليظهر هنا تلقائياً.</p>
+      </div>
+    `;
+    return;
+  }
+
+  let html = `
+    <!-- شريط أدوات السجل وإمكانية مسح الكل دفعة واحدة -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; background: #ffffff; padding: 0.9rem 1.25rem; border-radius: 14px; border: 1.5px solid var(--border-light); box-shadow: var(--shadow-sm);">
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; color: var(--royal-navy); font-size: 0.95rem;">
+        <span>📅</span>
+        <span>إجمالي الأيام المسجلة بالسجل: <strong>${dates.length}</strong> يوم</span>
+      </div>
+      <button type="button" class="btn btn-outline-danger" onclick="deleteAllHistory()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1.15rem; border-radius: 8px;">
+        <span>🗑️</span> حذف كل السجلات دفعة واحدة
+      </button>
+    </div>
+
+    <div class="history-grid">
+  `;
+
+  dates.forEach(dateStr => {
+    const rec = state.records[dateStr];
+    const d = new Date(dateStr);
+    const dayNames = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+    const dayName = dayNames[d.getDay()];
+
+    const acts = Object.keys(rec.activities || {});
+    let totalPresentInDay = new Set();
+    acts.forEach(a => (rec.activities[a] || []).forEach(id => totalPresentInDay.add(id)));
+
+    html += `
+      <div class="history-card">
+        <div class="history-header">
+          <div>
+            <span class="day-title">${dayName}</span>
+            <span class="date-str">${dateStr}</span>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="goToDateAttendance('${dateStr}')">
+            مراجعة وتعديل ✏️
+          </button>
+        </div>
+        <div class="history-activities">
+    `;
+
+    acts.forEach(actId => {
+      const act = ACTIVITIES[actId] || { name: actId, icon: "📌" };
+      const count = (rec.activities[actId] || []).length;
+      html += `
+        <div class="hist-act-pill">
+          <span>${act.icon} ${act.name}</span>
+          <span class="hist-count">${count} حاضر</span>
+        </div>
+      `;
+    });
+
+    html += `
+        </div>
+        <div class="history-footer">
+          <span>إجمالي الحاضرين: <strong>${totalPresentInDay.size}</strong> طالب</span>
+          <button type="button" class="btn-micro danger" onclick="deleteHistoryDay('${dateStr}')">حذف هذا اليوم 🗑️</button>
+        </div>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+  container.innerHTML = html;
+}
+
+function goToDateAttendance(dateStr) {
+  state.currentDate = dateStr;
+  switchTab("attendance");
+  const dInput = document.getElementById("attDateInput");
+  if (dInput) dInput.value = dateStr;
+}
+
+function deleteHistoryDay(dateStr) {
+  if (confirm(`هل أنت متأكد من حذف سجل يوم ${dateStr} بالكامل؟`)) {
+    delete state.records[dateStr];
+    saveData();
+    renderHistoryTab();
+    showToast("تم حذف سجل اليوم", "info");
+  }
+}
+
+/**
+ * حذف جميع سجلات وتواريخ الحضور السابقة دفعة واحدة
+ * مع مزامنة سحابية فورية لكل الأجهزة
+ */
+function deleteAllHistory() {
+  const totalDays = Object.keys(state.records).length;
+  if (totalDays === 0) {
+    showToast("لا توجد سجلات لحذفها", "warning");
+    return;
+  }
+
+  const confirmed = confirm(
+    `⚠️ تحذير ومسؤولية:\n\nهل أنت متأكد تماماً من حذف جميع سجلات وتواريخ الحضور السابقة بالكامل (${totalDays} يوم مسجل)؟\n\n• سيتم مسح حضور وغياب جميع الطلاب لكل الأيام السابقة.\n• سيتزامن هذا المسح فورياً مع جميع الأجهزة والموبايلات الأخرى.\n\nاضغط "موافق" لتأكيد حذف الكل.`
+  );
+
+  if (confirmed) {
+    state.records = {};
+    saveData();
+    renderHistoryTab();
+    showToast("تم حذف جميع سجلات الحضور بنجاح 🗑️", "info");
+  }
+}
+
+// ========================================================
+// 5. الإعدادات والنسخ الاحتياطي
+// ========================================================
+
+function renderSettingsTab() {
+  document.getElementById("settingChurchName").value = state.settings.churchName || "";
+  document.getElementById("settingMeetingName").value = state.settings.meetingName || "";
+  document.getElementById("settingLeaderName").value = state.settings.leaderName || "";
+  document.getElementById("settingAcademicYear").value = state.settings.academicYear || "";
+}
+
+function saveSettingsForm(e) {
+  if (e) e.preventDefault();
+  state.settings.churchName = document.getElementById("settingChurchName").value.trim();
+  state.settings.meetingName = document.getElementById("settingMeetingName").value.trim();
+  state.settings.leaderName = document.getElementById("settingLeaderName").value.trim();
+  state.settings.academicYear = document.getElementById("settingAcademicYear").value.trim();
+
+  saveData();
+  renderApp();
+  showToast("تم حفظ الإعدادات بنجاح", "success");
+}
+
+function exportBackupJson() {
+  const data = {
+    students: state.students,
+    records: state.records,
+    settings: state.settings,
+    exportedAt: new Date().toISOString()
+  };
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], { type: "application/json" });
+  DocxExporter.downloadBlob(blob, `نسخة_احتياطية_اجتماع_إعدادي_${new Date().toISOString().split("T")[0]}.json`);
+  showToast("تم تنزيل النسخة الاحتياطية بنجاح", "success");
+}
+
+function importBackupJson(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (parsed.students && Array.isArray(parsed.students)) {
+        if (confirm(`الملف يحتوي على ${parsed.students.length} طالب وسجلات حضور. هل تود استبدال البيانات الحالية؟`)) {
+          state.students = parsed.students;
+          state.records = parsed.records || {};
+          state.settings = { ...state.settings, ...(parsed.settings || {}) };
+          saveData();
+          renderApp();
+          showToast("تم استعادة النسخة الاحتياطية بنجاح!", "success");
+        }
+      } else {
+        alert("تنسيق الملف غير صالح.");
+      }
+    } catch (err) {
+      alert("خطأ في قراءة الملف: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function resetToSampleData() {
+  if (confirm("هل تريد استعادة البيانات التجريبية الأصلية؟")) {
+    if (typeof SAMPLE_DATA !== "undefined") {
+      state.students = [...SAMPLE_DATA.students];
+      state.records = JSON.parse(JSON.stringify(SAMPLE_DATA.records));
+      state.settings = { ...state.settings, ...SAMPLE_DATA.settings };
+      saveData();
+      renderApp();
+      showToast("تمت استعادة البيانات التجريبية", "success");
+    }
+  }
+}
+
+// ========================================================
+// التنبيهات (Toasts)
+// ========================================================
+
+function showToast(message, type = "info") {
+  const container = document.getElementById("toastContainer");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = `toast-msg toast-${type}`;
+  toast.innerHTML = `<span>${message}</span>`;
+
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add("fade-out");
+    setTimeout(() => toast.remove(), 400);
+  }, 2500);
+}
+
+  </script>
+
+  <!-- المزامنة السحابية اللحظية مع Firebase -->
+  <script type="module">
+/**
+ * وحدة المزامنة السحابية اللحظية مع Firebase Cloud Firestore
+ * تتيح فتح الموقع من أجهزة متعددة وتحديث الحضور والبيانات فورياً في نفس الثانية
+ */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  onSnapshot, 
+  getDoc 
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+// إعدادات Firebase الخاصة بالمستخدم
+const firebaseConfig = {
+  apiKey: "AIzaSyA65t4v-pH9BVcUUGfh5i18QYtm-iARLrE",
+  authDomain: "mon-a7dade.firebaseapp.com",
+  projectId: "mon-a7dade",
+  storageBucket: "mon-a7dade.firebasestorage.app",
+  messagingSenderId: "932318160151",
+  appId: "1:932318160151:web:0438dabc894017ed674352"
+};
+
+// إنشاء معرّف فريد لهذا الجهاز لتفادي تكرار التحديث الذاتي
+const myDeviceId = "device-" + Date.now() + "-" + Math.random().toString(36).substring(2, 7);
+
+let db = null;
+let isConnected = false;
+let hasInitialLoaded = false;
+let isPushingUpdate = false;
+
+// كائن وسيط عام يربط التطبيق مع Firebase
+window.FirebaseSync = {
+  db: null,
+  isConnected: false,
+
+  /**
+   * إرسال التحديثات الجديدة إلى Firestore لتصل لكل الأجهزة في نفس اللحظة
+   */
+  async pushUpdate(data) {
+    if (!db || !isConnected) return;
+    try {
+      isPushingUpdate = true;
+      const docRef = doc(db, "prep_meeting", "main_data");
+      await setDoc(docRef, {
+        students: data.students || [],
+        records: data.records || {},
+        settings: data.settings || {},
+        updatedAt: Date.now(),
+        lastUpdatedBy: myDeviceId
+      }, { merge: true });
+      setTimeout(() => { isPushingUpdate = false; }, 300);
+    } catch (err) {
+      isPushingUpdate = false;
+      console.warn("Firebase push error:", err);
+      updateSyncBadge("error", "فشل المزامنة السحابية (تحقق من قواعد Firestore)");
+    }
+  }
+};
+
+/**
+ * تحديث شارة حالة الاتصال بالسحابة في شريط الرأس
+ */
+function updateSyncBadge(status, text) {
+  const badge = document.getElementById("firebaseSyncBadge");
+  const textEl = document.getElementById("firebaseSyncText");
+  const dot = document.getElementById("firebaseSyncDot");
+
+  if (!badge || !textEl || !dot) return;
+
+  if (status === "connected") {
+    badge.style.borderColor = "#6ee7b7";
+    badge.style.color = "#10b981";
+    badge.style.background = "rgba(16, 185, 129, 0.1)";
+    dot.style.background = "#10b981";
+    dot.classList.add("sync-dot-live");
+    textEl.textContent = text || "متصل سحابياً (مزامنة فورية)";
+  } else if (status === "syncing") {
+    badge.style.borderColor = "#fde047";
+    badge.style.color = "#f59e0b";
+    badge.style.background = "rgba(245, 158, 11, 0.1)";
+    dot.style.background = "#f59e0b";
+    dot.classList.remove("sync-dot-live");
+    textEl.textContent = text || "جاري المزامنة...";
+  } else if (status === "error") {
+    badge.style.borderColor = "#fca5a5";
+    badge.style.color = "#ef4444";
+    badge.style.background = "rgba(239, 68, 68, 0.1)";
+    dot.style.background = "#ef4444";
+    dot.classList.remove("sync-dot-live");
+    textEl.textContent = text || "غير متصل (تحقق من قواعد السحابة)";
+  } else {
+    badge.style.borderColor = "#cbd5e1";
+    badge.style.color = "#94a3b8";
+    badge.style.background = "rgba(255, 255, 255, 0.05)";
+    dot.style.background = "#94a3b8";
+    dot.classList.remove("sync-dot-live");
+    textEl.textContent = text || "جاري الاتصال بالسحابة...";
+  }
+}
+
+/**
+ * بدء الاتصال بفايربيز وربط المزامنة الحية لحظياً
+ */
+async function initFirebase() {
+  try {
+    updateSyncBadge("connecting", "جاري الاتصال بـ Firebase...");
+
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    window.FirebaseSync.db = db;
+
+    const docRef = doc(db, "prep_meeting", "main_data");
+
+    // الاستماع اللحظي الفوري لأي تغيير عبر onSnapshot (WebSockets)
+    onSnapshot(docRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const cloudData = snapshot.data();
+
+        // إذا كان التحديث صادراً من هذا الجهاز نفسه نتجاهل إعادة الرسم
+        if (cloudData.lastUpdatedBy === myDeviceId && isPushingUpdate) {
+          return;
+        }
+
+        // تحديث حالة التطبيق العامة بالبيانات السحابية الواردة
+        if (typeof state !== "undefined") {
+          state.students = cloudData.students || [];
+          state.records = cloudData.records || {};
+          if (cloudData.settings) {
+            state.settings = { ...state.settings, ...cloudData.settings };
+          }
+
+          // حفظ نسخة محلية احتياطية في localStorage
+          try {
+            localStorage.setItem("prep_meeting_db_v1", JSON.stringify({
+              students: state.students,
+              records: state.records,
+              settings: state.settings,
+              savedAt: new Date().toISOString()
+            }));
+          } catch (e) {}
+
+          // إعادة رسم الشاشة الحالية لتحديث الحضور والتقارير فوراً في نفس اللحظة!
+          if (typeof renderApp === "function") {
+            renderApp();
+          }
+
+          if (hasInitialLoaded) {
+            if (typeof showToast === "function") {
+              showToast("⚡ تم تحديث الحضور والبيانات من جهاز آخر في نفس اللحظة!", "info");
+            }
+          } else {
+            hasInitialLoaded = true;
+          }
+        }
+
+        isConnected = true;
+        window.FirebaseSync.isConnected = true;
+        updateSyncBadge("connected", "متصل سحابياً (مزامنة فورية)");
+      } else {
+        // المستند غير موجود بعد في السحابة: نرفعه فوراً لأول مرة
+        uploadInitialData(docRef);
+      }
+    }, (error) => {
+      console.warn("Firestore onSnapshot error:", error);
+      isConnected = false;
+      window.FirebaseSync.isConnected = false;
+      updateSyncBadge("error", "تحقق من قواعد Firestore في وحدة التحكم");
+    });
+
+  } catch (err) {
+    console.error("Firebase init failed:", err);
+    isConnected = false;
+    window.FirebaseSync.isConnected = false;
+    updateSyncBadge("error", "تعذر الاتصال بـ Firebase");
+  }
+}
+
+/**
+ * رفع البيانات المحلية الحالية إلى قاعدة بيانات Firestore لأول مرة
+ */
+async function uploadInitialData(docRef) {
+  try {
+    if (typeof state !== "undefined") {
+      await setDoc(docRef, {
+        students: state.students || [],
+        records: state.records || {},
+        settings: state.settings || {},
+        updatedAt: Date.now(),
+        lastUpdatedBy: myDeviceId
+      });
+      isConnected = true;
+      window.FirebaseSync.isConnected = true;
+      hasInitialLoaded = true;
+      updateSyncBadge("connected", "متصل سحابياً (تم رفع البيانات)");
+    }
+  } catch (err) {
+    console.warn("Upload initial data error:", err);
+    updateSyncBadge("error", "يرجى تفعيل قواعد Firestore في كونسول Firebase");
+  }
+}
+
+// بدء التهيئة عند تحميل الصفحة
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initFirebase);
+} else {
+  initFirebase();
+}
+
+  </script>
 </body>
 </html>
