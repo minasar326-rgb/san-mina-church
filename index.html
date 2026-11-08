@@ -2120,6 +2120,18 @@ function setupKeyboardShortcuts() {
 
 function loadData() {
   try {
+    // تنظيف إلزامي فوري لإزالة أي بيانات دخيلة تم استيرادها بالخطأ من تقرير إعداد الخدام الخارجي
+    if (localStorage.getItem("prep_meeting_purged_foreign_v1") !== "true") {
+      try {
+        const raw = localStorage.getItem("prep_meeting_db_v1") || "";
+        if (raw.includes("-خ") || raw.includes("_خ") || raw.includes("تمهيد") || raw.includes("ايريني بولس") || raw.includes("جومانه غطاس")) {
+          localStorage.removeItem("prep_meeting_db_v1");
+          localStorage.removeItem("prep_meeting_backup_permanent");
+        }
+      } catch (err) {}
+      localStorage.setItem("prep_meeting_purged_foreign_v1", "true");
+    }
+
     let saved = localStorage.getItem("prep_meeting_db_v1");
     // فحص النسخة الدائمة المحمية إذا كانت البيانات الرئيسية مفقودة
     if (!saved || saved === "{}" || (JSON.parse(saved).students || []).length === 0) {
@@ -2132,7 +2144,12 @@ function loadData() {
 
     if (saved) {
       const parsed = JSON.parse(saved);
-      state.students = parsed.students || [];
+      let rawStudents = parsed.students || [];
+      // تصفية أمنية صارمة: إزالة أي أسماء تحمل وسوم تقرير إعداد الخدام
+      state.students = rawStudents.filter(s => {
+        if (!s || !s.name) return false;
+        return !(/[-_]خ\s*\d|تمهيد[ىي]/i.test(s.name)) && !s.name.includes("ايريني بولس") && !s.name.includes("جومانه غطاس");
+      });
       state.records = parsed.records || {};
       state.settings = { ...state.settings, ...(parsed.settings || {}) };
       if (!state.settings.churchName || state.settings.churchName.includes("مارمرقس")) {
@@ -4002,6 +4019,16 @@ let pendingPushData = null;
 // تتبع وقت آخر تعديل محلي تم على هذا الجهاز
 let lastLocalSaveTime = 0;
 try {
+  // فحص استباقي لتنظيف أي بيانات دخيلة قديمة
+  if (localStorage.getItem("prep_meeting_purged_foreign_v1") !== "true") {
+    const raw = localStorage.getItem("prep_meeting_db_v1") || "";
+    if (raw.includes("-خ") || raw.includes("_خ") || raw.includes("تمهيد") || raw.includes("ايريني بولس") || raw.includes("جومانه غطاس")) {
+      localStorage.removeItem("prep_meeting_db_v1");
+      localStorage.removeItem("prep_meeting_backup_permanent");
+    }
+    localStorage.setItem("prep_meeting_purged_foreign_v1", "true");
+  }
+
   const localSaved = localStorage.getItem("prep_meeting_db_v1");
   if (localSaved) {
     const parsed = JSON.parse(localSaved);
@@ -4023,8 +4050,14 @@ window.FirebaseSync = {
   async pushUpdate(data, isExplicitWipe = false) {
     if (!data) return;
 
+    // تصفية أمنية ضد أي أسماء دخيلة
+    let cleanStudents = (data.students || []).filter(s => {
+      if (!s || !s.name) return false;
+      return !(/[-_]خ\s*\d|تمهيد[ىي]/i.test(s.name)) && !s.name.includes("ايريني بولس") && !s.name.includes("جومانه غطاس");
+    });
+
     // 🛡️ درع الحماية 1: منع إرسال قائمة طلاب فارغة نهائياً إذا لم يكن مسحاً مقصوداً ومؤكداً
-    if ((!data.students || data.students.length === 0) && !isExplicitWipe) {
+    if (cleanStudents.length === 0 && !isExplicitWipe) {
       console.warn("🛡️ [درع الأمان] تم منع إرسال قائمة طلاب فارغة إلى السحابة لحماية البيانات من المسح العرضي!");
       return;
     }
@@ -4032,10 +4065,10 @@ window.FirebaseSync = {
     lastLocalSaveTime = Date.now();
 
     // حفظ نسخة أمان محلية دائمة في المتصفح إذا كانت البيانات تحتوي على طلاب
-    if (data.students && data.students.length > 0) {
+    if (cleanStudents.length > 0) {
       try {
         localStorage.setItem("prep_meeting_backup_permanent", JSON.stringify({
-          students: data.students,
+          students: cleanStudents,
           records: data.records || {},
           settings: data.settings || {},
           savedAt: new Date().toISOString()
@@ -4044,14 +4077,14 @@ window.FirebaseSync = {
     }
 
     if (!db) {
-      pendingPushData = { data, isExplicitWipe };
+      pendingPushData = { data: { ...data, students: cleanStudents }, isExplicitWipe };
       return;
     }
 
     try {
       const docRef = doc(db, "prep_meeting", "main_data");
       const payload = {
-        students: data.students || [],
+        students: cleanStudents,
         records: data.records || {},
         settings: data.settings || {},
         updatedAt: lastLocalSaveTime,
@@ -4061,7 +4094,7 @@ window.FirebaseSync = {
       await setDoc(docRef, payload);
 
       // 🛡️ درع الحماية 2: حفظ نسخة أرشيفية سحابية تلقائياً كلما احتوت البيانات على طلاب
-      if (data.students && data.students.length > 0) {
+      if (cleanStudents.length > 0) {
         saveCloudArchivalBackup(payload);
       }
 
@@ -4085,19 +4118,24 @@ window.FirebaseSync = {
 
     try {
       updateSyncBadge("syncing", "جاري استرجاع النسخة الاحتياطية من السحابة...");
-      const backupRef = doc(db, "prep_meeting_backups", "backup_emergency_restore");
-      let snap = await getDoc(backupRef);
+      const latestRef = doc(db, "prep_meeting_backups", "latest_backup");
+      let snap = await getDoc(latestRef);
 
       if (!snap.exists()) {
-        const latestRef = doc(db, "prep_meeting_backups", "latest_backup");
-        snap = await getDoc(latestRef);
+        const backupRef = doc(db, "prep_meeting_backups", "backup_emergency_restore");
+        snap = await getDoc(backupRef);
       }
 
       if (snap.exists()) {
         const backupData = snap.data();
-        if (backupData && backupData.students && backupData.students.length > 0) {
+        let bStudents = (backupData && backupData.students) || [];
+        bStudents = bStudents.filter(s => {
+          if (!s || !s.name) return false;
+          return !(/[-_]خ\s*\d|تمهيد[ىي]/i.test(s.name)) && !s.name.includes("ايريني بولس") && !s.name.includes("جومانه غطاس");
+        });
+        if (bStudents.length > 0) {
           if (typeof state !== "undefined") {
-            state.students = backupData.students;
+            state.students = bStudents;
             state.records = backupData.records || {};
             if (backupData.settings) {
               state.settings = { ...state.settings, ...backupData.settings };
@@ -4223,6 +4261,14 @@ async function initFirebase() {
       if (snapshot.exists()) {
         const cloudData = snapshot.data();
 
+        // تصفية أمنية فورية على بيانات السحابة لحذف أي أسماء من تقرير إعداد الخدام الخارجي
+        if (cloudData.students && Array.isArray(cloudData.students)) {
+          cloudData.students = cloudData.students.filter(s => {
+            if (!s || !s.name) return false;
+            return !(/[-_]خ\s*\d|تمهيد[ىي]/i.test(s.name)) && !s.name.includes("ايريني بولس") && !s.name.includes("جومانه غطاس");
+          });
+        }
+
         // 1. إذا كان هذا التحديث صادراً من هذا الجهاز نفسه: نتجاهله لأنه موجود بالفعل
         if (cloudData.lastUpdatedBy === myDeviceId) {
           isConnected = true;
@@ -4233,13 +4279,18 @@ async function initFirebase() {
           return;
         }
 
-        // 🛡️ درع الحماية 3 (منع مسح السحابة من جهاز فارغ):
-        // إذا كانت بيانات السحابة تحتوي على طلاب، والجهاز المحلي لا يحتوي على طلاب:
-        // نعتمد بيانات السحابة دائماً ونتجاهل أي توقيت محلي فارغ!
+        // 🛡️ درع الحماية 3 (منع مسح السحابة من جهاز فارغ + فرض النسخة المعتمدة):
         const cloudHasStudents = cloudData.students && cloudData.students.length > 0;
         const localHasStudents = typeof state !== "undefined" && state.students && state.students.length > 0;
 
-        if (!cloudHasStudents && localHasStudents) {
+        if (cloudData.forceResetTime) {
+          const resetKey = "prep_meeting_reset_ver_" + cloudData.forceResetTime;
+          if (localStorage.getItem(resetKey) !== "true") {
+            // اعتماد بيانات السحابة وتجاوز التوقيت الزمني
+            localStorage.setItem(resetKey, "true");
+            lastLocalSaveTime = cloudData.updatedAt || Date.now();
+          }
+        } else if (!cloudHasStudents && localHasStudents) {
           // السحابة فارغة ولكن هذا الجهاز لديه طلاب حقيقيون -> نرفع بيانات هذا الجهاز فوراً لإنقاذ السحابة!
           console.warn("🛡️ [درع الأمان] السحابة كانت فارغة، تم رفع بيانات هذا الجهاز لحمايتها فوراً!");
           window.FirebaseSync.pushUpdate({
@@ -4248,11 +4299,8 @@ async function initFirebase() {
             settings: state.settings
           });
           return;
-        }
-
-        if (cloudHasStudents && !localHasStudents) {
+        } else if (cloudHasStudents && !localHasStudents) {
           // السحابة بها طلاب والجهاز المحلي فارغ -> نعتمد بيانات السحابة فوراً دائماً دون أي تردد
-          // نتخطى شرط التوقيت الزمني
         } else if (cloudData.updatedAt && cloudData.updatedAt < lastLocalSaveTime && localHasStudents) {
           // إذا كانت بيانات هذا الجهاز أحدث وكلاهما به طلاب: نحدّث السحابة
           window.FirebaseSync.pushUpdate({
