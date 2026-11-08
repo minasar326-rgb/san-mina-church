@@ -1403,6 +1403,9 @@ body {
               <span>قائمة طلاب المرحلة الإعدادية</span>
             </div>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button type="button" class="btn btn-outline-primary" onclick="restoreFromCloudBackupUI()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1rem; border-radius: 8px;">
+                🛡️ استرجاع سحابي
+              </button>
               <button type="button" class="btn btn-outline-danger" onclick="deleteAllStudents()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1rem; border-radius: 8px;">
                 🗑️ مسح كل الطلاب
               </button>
@@ -1493,6 +1496,9 @@ body {
             تُحفظ جميع البيانات تلقائياً وفوراً في متصفحك. يمكنك تنزيل ملف نسخة احتياطية لحفظها على فلاشة أو نقلها لأي جهاز أو موبايل آخر بكل سهولة.
           </p>
           <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button type="button" class="btn btn-gold" onclick="restoreFromCloudBackupUI()">
+              <span>🛡️</span> استرجاع فوري من النسخة الاحتياطية السحابية
+            </button>
             <button type="button" class="btn btn-primary" onclick="exportBackupJson()">
               <span>📥</span> تنزيل نسخة احتياطية (ملف JSON)
             </button>
@@ -1500,9 +1506,6 @@ body {
               <span>📤</span> استيراد نسخة احتياطية
               <input type="file" accept=".json" style="display: none;" onchange="importBackupJson(event)">
             </label>
-            <button type="button" class="btn btn-outline-danger" onclick="resetToSampleData()">
-              <span>🔄</span> استعادة البيانات التجريبية
-            </button>
           </div>
         </div>
       </section>
@@ -1530,6 +1533,7 @@ body {
           <div class="input-group">
             <label class="input-label" for="studentGradeSelect">القسم (المرحلة الدراسية): *</label>
             <select id="studentGradeSelect" class="form-control" required>
+              <option value="grade6">سنة سادسة ابتدائي</option>
               <option value="prep1">سنة أولى إعدادي</option>
               <option value="prep2">سنة ثانية إعدادي</option>
               <option value="prep3">سنة ثالثة إعدادي</option>
@@ -2022,6 +2026,7 @@ window.DocxExporter = DocxExporter;
 
 // تعريف المراحل الدراسية
 const GRADES = {
+  grade6: { id: "grade6", name: "سنة سادسة ابتدائي", short: "سادسة", color: "#b45309", bg: "#fef3c7" },
   prep1: { id: "prep1", name: "سنة أولى إعدادي", short: "أولى", color: "#1d4ed8", bg: "#dbeafe" },
   prep2: { id: "prep2", name: "سنة ثانية إعدادي", short: "ثانية", color: "#047857", bg: "#d1fae5" },
   prep3: { id: "prep3", name: "سنة ثالثة إعدادي", short: "ثالثة", color: "#6d28d9", bg: "#ede9fe" }
@@ -2115,7 +2120,16 @@ function setupKeyboardShortcuts() {
 
 function loadData() {
   try {
-    const saved = localStorage.getItem("prep_meeting_db_v1");
+    let saved = localStorage.getItem("prep_meeting_db_v1");
+    // فحص النسخة الدائمة المحمية إذا كانت البيانات الرئيسية مفقودة
+    if (!saved || saved === "{}" || (JSON.parse(saved).students || []).length === 0) {
+      const backupPerm = localStorage.getItem("prep_meeting_backup_permanent");
+      if (backupPerm && (JSON.parse(backupPerm).students || []).length > 0) {
+        console.log("🛡️ [درع الأمان] تم استرجاع البيانات تلقائياً من النسخة الدائمة!");
+        saved = backupPerm;
+      }
+    }
+
     if (saved) {
       const parsed = JSON.parse(saved);
       state.students = parsed.students || [];
@@ -2125,7 +2139,6 @@ function loadData() {
         state.settings.churchName = "كنيسة الشهيد العظيم مارمينا العجائبي";
       }
     } else {
-      // نبدأ بقائمة فارغة تماماً لكي يضيف الخادم طلابه الحقيقيين فقط
       state.students = [];
       state.records = {};
       state.settings = {
@@ -2142,7 +2155,7 @@ function loadData() {
   }
 }
 
-function saveData(silent = false) {
+function saveData(silent = false, isExplicitWipe = false) {
   try {
     const dataToSave = {
       students: state.students,
@@ -2152,9 +2165,13 @@ function saveData(silent = false) {
     };
     localStorage.setItem("prep_meeting_db_v1", JSON.stringify(dataToSave));
 
-    // مزامنة فورية مع Firebase السحابية لكل الأجهزة
+    if (state.students && state.students.length > 0) {
+      localStorage.setItem("prep_meeting_backup_permanent", JSON.stringify(dataToSave));
+    }
+
+    // مزامنة فورية مع Firebase السحابية لكل الأجهزة مع حماية ضد المسح
     if (window.FirebaseSync && typeof window.FirebaseSync.pushUpdate === "function") {
-      window.FirebaseSync.pushUpdate(dataToSave);
+      window.FirebaseSync.pushUpdate(dataToSave, isExplicitWipe);
     }
 
     if (!silent) {
@@ -3393,18 +3410,23 @@ function renderStudentsTab() {
   filtered.sort((a, b) => a.name.localeCompare(b.name, "ar"));
 
   const countAll = state.students.length;
+  const countG6 = state.students.filter(s => s.grade === "grade6").length;
   const countP1 = state.students.filter(s => s.grade === "prep1").length;
   const countP2 = state.students.filter(s => s.grade === "prep2").length;
   const countP3 = state.students.filter(s => s.grade === "prep3").length;
 
   const tabsEl = document.getElementById("studentGradeTabs");
   if (tabsEl) {
-    tabsEl.innerHTML = `
-      <button class="chip ${state.studentFilterGrade === 'all' ? 'active' : ''}" onclick="setStudentGradeFilter('all')">الكل (${countAll})</button>
+    let tabsHtml = `<button class="chip ${state.studentFilterGrade === 'all' ? 'active' : ''}" onclick="setStudentGradeFilter('all')">الكل (${countAll})</button>`;
+    if (countG6 > 0 || state.studentFilterGrade === 'grade6') {
+      tabsHtml += `<button class="chip ${state.studentFilterGrade === 'grade6' ? 'active' : ''}" onclick="setStudentGradeFilter('grade6')">سادسة (${countG6})</button>`;
+    }
+    tabsHtml += `
       <button class="chip ${state.studentFilterGrade === 'prep1' ? 'active' : ''}" onclick="setStudentGradeFilter('prep1')">أولى إعدادي (${countP1})</button>
       <button class="chip ${state.studentFilterGrade === 'prep2' ? 'active' : ''}" onclick="setStudentGradeFilter('prep2')">ثانية إعدادي (${countP2})</button>
       <button class="chip ${state.studentFilterGrade === 'prep3' ? 'active' : ''}" onclick="setStudentGradeFilter('prep3')">ثالثة إعدادي (${countP3})</button>
     `;
+    tabsEl.innerHTML = tabsHtml;
   }
 
   if (filtered.length === 0) {
@@ -3412,6 +3434,10 @@ function renderStudentsTab() {
       <div class="empty-state">
         <div class="empty-icon">👤</div>
         <h3>لا يوجد طلاب مضافين</h3>
+        <p>إذا كانت لديك نسخة سحابية سابقة، يمكنك استرجاعها فوراً:</p>
+        <button type="button" class="btn btn-gold" onclick="restoreFromCloudBackupUI()" style="margin-top: 0.75rem;">
+          🛡️ استرجاع فوري من النسخة الاحتياطية السحابية
+        </button>
       </div>
     `;
     return;
@@ -3686,15 +3712,32 @@ function deleteAllStudents() {
     return;
   }
 
-  if (confirm(`⚠️ تحذير نهائي: هل أنت متأكد من مسح جميع الطلاب (${state.students.length} طالب) بالكامل؟\nلن يمكن التراجع عن هذا الإجراء وسيتم مسحهم من كل الأجهزة المسجلة.`)) {
-    state.students = [];
-    state.records = {};
-    state.selectedStudentId = null;
-    state.singleStudentDraftActivities = {};
+  // تنزيل نسخة احتياطية إجبارية قبل المسح لضمان عدم ضياع أي بيانات
+  exportBackupJson();
 
-    saveData();
-    renderStudentsTab();
-    showToast("تم مسح جميع الطلاب وتصفير القائمة بنجاح", "success");
+  const confirmed1 = confirm(`⚠️ تنبيه أمان: تم تنزيل ملف نسخة احتياطية الآن تلقائياً على جهازك.\n\nهل أنت متأكد من مسح جميع الطلاب (${state.students.length} طالب) بالكامل؟`);
+  if (!confirmed1) return;
+
+  const confirmed2 = confirm(`⚠️ تأكيد نهائي ومسؤولية:\nهل أنت متأكد بنسبة 100% من مسح جميع الطلاب وسجلاتهم؟`);
+  if (!confirmed2) return;
+
+  state.students = [];
+  state.records = {};
+  state.selectedStudentId = null;
+  state.singleStudentDraftActivities = {};
+
+  saveData(false, true); // مسح مقصود مع وسم صريح
+  renderStudentsTab();
+  showToast("تم مسح جميع الطلاب وتصفير القائمة", "info");
+}
+
+async function restoreFromCloudBackupUI() {
+  if (confirm("هل تريد استرجاع أحدث نسخة احتياطية سحابية محفوظة؟\nسيتم استرجاع قائمة الطلاب وسجلات الحضور فوراً.")) {
+    if (window.FirebaseSync && typeof window.FirebaseSync.restoreFromCloudBackup === "function") {
+      await window.FirebaseSync.restoreFromCloudBackup();
+    } else {
+      alert("المزامنة السحابية غير متصلة حالياً، يرجى التحقق من الإنترنت.");
+    }
   }
 }
 
@@ -3922,8 +3965,11 @@ function showToast(message, type = "info") {
   <script type="module">
 /**
  * وحدة المزامنة السحابية اللحظية مع Firebase Cloud Firestore
- * تتيح فتح الموقع من أجهزة متعددة وتحديث الحضور والبيانات فورياً في نفس الثانية
- * مع حماية فائقة لمنع مسح أي بيانات أو رجوع بيانات محذوفة
+ * الإصدار المحصّن والمحمي ضد فقدان أو مسح البيانات (Ironclad Zero-Loss Engine)
+ * - حماية تلقائية تمنع نهائياً مسح بيانات السحابة من أي جهاز فارغ
+ * - نسخ احتياطي سحابي تلقائي ومستمر في أرشيف منفصل
+ * - نسخ احتياطي محلي دائم في المتصفح غير قابل للمسح العرضي
+ * - زر استرجاع فوري بضغطة واحدة لأي حالة طوارئ
  */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
@@ -3931,6 +3977,7 @@ import {
   getFirestore, 
   doc, 
   setDoc, 
+  getDoc,
   onSnapshot 
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
@@ -3944,7 +3991,7 @@ const firebaseConfig = {
   appId: "1:932318160151:web:0438dabc894017ed674352"
 };
 
-// إنشاء معرّف فريد لهذا الجهاز لتفادي تكرار التحديث الذاتي
+// معرّف فريد للجهاز لتفادي التحديث الذاتي
 const myDeviceId = "device-" + Date.now() + "-" + Math.random().toString(36).substring(2, 7);
 
 let db = null;
@@ -3968,37 +4015,154 @@ try {
 window.FirebaseSync = {
   db: null,
   isConnected: false,
+  hasInitialLoaded: false,
 
   /**
-   * إرسال التحديثات الجديدة إلى Firestore لتصل لكل الأجهزة في نفس اللحظة
-   * لا تسقط أي تحديث حتى لو كان الاتصال جارياً
+   * إرسال التحديثات إلى Firestore مع حماية مشددة ضد المسح
    */
-  async pushUpdate(data) {
+  async pushUpdate(data, isExplicitWipe = false) {
+    if (!data) return;
+
+    // 🛡️ درع الحماية 1: منع إرسال قائمة طلاب فارغة نهائياً إذا لم يكن مسحاً مقصوداً ومؤكداً
+    if ((!data.students || data.students.length === 0) && !isExplicitWipe) {
+      console.warn("🛡️ [درع الأمان] تم منع إرسال قائمة طلاب فارغة إلى السحابة لحماية البيانات من المسح العرضي!");
+      return;
+    }
+
     lastLocalSaveTime = Date.now();
 
+    // حفظ نسخة أمان محلية دائمة في المتصفح إذا كانت البيانات تحتوي على طلاب
+    if (data.students && data.students.length > 0) {
+      try {
+        localStorage.setItem("prep_meeting_backup_permanent", JSON.stringify({
+          students: data.students,
+          records: data.records || {},
+          settings: data.settings || {},
+          savedAt: new Date().toISOString()
+        }));
+      } catch (e) {}
+    }
+
     if (!db) {
-      pendingPushData = data;
+      pendingPushData = { data, isExplicitWipe };
       return;
     }
 
     try {
       const docRef = doc(db, "prep_meeting", "main_data");
-      await setDoc(docRef, {
+      const payload = {
         students: data.students || [],
         records: data.records || {},
         settings: data.settings || {},
         updatedAt: lastLocalSaveTime,
         lastUpdatedBy: myDeviceId
-      });
+      };
+
+      await setDoc(docRef, payload);
+
+      // 🛡️ درع الحماية 2: حفظ نسخة أرشيفية سحابية تلقائياً كلما احتوت البيانات على طلاب
+      if (data.students && data.students.length > 0) {
+        saveCloudArchivalBackup(payload);
+      }
+
       isConnected = true;
       window.FirebaseSync.isConnected = true;
-      updateSyncBadge("connected", "متصل سحابياً (مزامنة فورية)");
+      updateSyncBadge("connected", "متصل سحابياً (مزامنة فورية آمنة 🛡️)");
     } catch (err) {
       console.warn("Firebase push error:", err);
       updateSyncBadge("error", "فشل المزامنة السحابية (تحقق من قواعد Firestore)");
     }
+  },
+
+  /**
+   * 🛡️ زر الطوارئ: استرجاع البيانات فوراً من النسخة الاحتياطية السحابية
+   */
+  async restoreFromCloudBackup() {
+    if (!db) {
+      alert("جاري الاتصال بقاعدة البيانات السحابية، يرجى المحاولة بعد قليل...");
+      return;
+    }
+
+    try {
+      updateSyncBadge("syncing", "جاري استرجاع النسخة الاحتياطية من السحابة...");
+      const backupRef = doc(db, "prep_meeting_backups", "backup_emergency_restore");
+      let snap = await getDoc(backupRef);
+
+      if (!snap.exists()) {
+        const latestRef = doc(db, "prep_meeting_backups", "latest_backup");
+        snap = await getDoc(latestRef);
+      }
+
+      if (snap.exists()) {
+        const backupData = snap.data();
+        if (backupData && backupData.students && backupData.students.length > 0) {
+          if (typeof state !== "undefined") {
+            state.students = backupData.students;
+            state.records = backupData.records || {};
+            if (backupData.settings) {
+              state.settings = { ...state.settings, ...backupData.settings };
+            }
+
+            // كتابتها إلى المستند الرئيسي وإلى localStorage
+            const docRef = doc(db, "prep_meeting", "main_data");
+            await setDoc(docRef, {
+              students: state.students,
+              records: state.records,
+              settings: state.settings,
+              updatedAt: Date.now(),
+              lastUpdatedBy: myDeviceId
+            });
+
+            try {
+              localStorage.setItem("prep_meeting_db_v1", JSON.stringify({
+                students: state.students,
+                records: state.records,
+                settings: state.settings,
+                savedAt: new Date().toISOString()
+              }));
+              localStorage.setItem("prep_meeting_backup_permanent", JSON.stringify({
+                students: state.students,
+                records: state.records,
+                settings: state.settings,
+                savedAt: new Date().toISOString()
+              }));
+            } catch (e) {}
+
+            if (typeof renderApp === "function") renderApp();
+            if (typeof showToast === "function") {
+              showToast(`🛡️ تم استرجاع ${state.students.length} طالب وجميع السجلات بنجاح!`, "success");
+            }
+            alert(`✅ تم بنجاح استرجاع بياناتك كاملة (${state.students.length} طالب مع كافة سجلات الحضور) من النسخة الاحتياطية السحابية!`);
+            return true;
+          }
+        }
+      } else {
+        alert("لم يتم العثور على نسخة احتياطية سحابية سابقة.");
+      }
+    } catch (err) {
+      console.error("Error restoring from cloud:", err);
+      alert("حدث خطأ أثناء محاولة الاسترجاع السحابي: " + err.message);
+    }
+    return false;
   }
 };
+
+/**
+ * حفظ نسخة أرشيفية سحابية في مسار منفصل كضمان دائم
+ */
+async function saveCloudArchivalBackup(payload) {
+  try {
+    if (!db) return;
+    const latestBackupRef = doc(db, "prep_meeting_backups", "latest_backup");
+    await setDoc(latestBackupRef, payload);
+
+    const todayStr = new Date().toISOString().split("T")[0];
+    const dailyBackupRef = doc(db, "prep_meeting_backups", `backup_${todayStr}`);
+    await setDoc(dailyBackupRef, payload);
+  } catch (e) {
+    // خلفية صامتة
+  }
+}
 
 /**
  * تحديث شارة حالة الاتصال بالسحابة في شريط الرأس
@@ -4016,7 +4180,7 @@ function updateSyncBadge(status, text) {
     badge.style.background = "rgba(16, 185, 129, 0.1)";
     dot.style.background = "#10b981";
     dot.classList.add("sync-dot-live");
-    textEl.textContent = text || "متصل سحابياً (مزامنة فورية)";
+    textEl.textContent = text || "متصل سحابياً (مزامنة فورية آمنة 🛡️)";
   } else if (status === "syncing") {
     badge.style.borderColor = "#fde047";
     badge.style.color = "#f59e0b";
@@ -4046,17 +4210,11 @@ function updateSyncBadge(status, text) {
  */
 async function initFirebase() {
   try {
-    updateSyncBadge("connecting", "جاري الاتصال بـ Firebase...");
+    updateSyncBadge("connecting", "جاري الاتصال بالسحابة...");
 
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
     window.FirebaseSync.db = db;
-
-    // إذا كان هناك تحديث معلق تم قبل اكتمال الاتصال نرسله فوراً
-    if (pendingPushData) {
-      window.FirebaseSync.pushUpdate(pendingPushData);
-      pendingPushData = null;
-    }
 
     const docRef = doc(db, "prep_meeting", "main_data");
 
@@ -4065,27 +4223,47 @@ async function initFirebase() {
       if (snapshot.exists()) {
         const cloudData = snapshot.data();
 
-        // 1. إذا كان هذا التحديث صادراً من هذا الجهاز نفسه: نتجاهله لأنه موجود بالفعل في الذاكرة
+        // 1. إذا كان هذا التحديث صادراً من هذا الجهاز نفسه: نتجاهله لأنه موجود بالفعل
         if (cloudData.lastUpdatedBy === myDeviceId) {
           isConnected = true;
           window.FirebaseSync.isConnected = true;
-          updateSyncBadge("connected", "متصل سحابياً (مزامنة فورية)");
+          window.FirebaseSync.hasInitialLoaded = true;
+          hasInitialLoaded = true;
+          updateSyncBadge("connected", "متصل سحابياً (مزامنة فورية آمنة 🛡️)");
           return;
         }
 
-        // 2. إذا كانت بيانات السحابة أقدم من آخر تعديل قمنا به محلياً على هذا الجهاز: نتجاهلها ونحدث السحابة
-        if (cloudData.updatedAt && cloudData.updatedAt < lastLocalSaveTime) {
-          if (typeof state !== "undefined" && state.students) {
-            window.FirebaseSync.pushUpdate({
-              students: state.students,
-              records: state.records,
-              settings: state.settings
-            });
-          }
+        // 🛡️ درع الحماية 3 (منع مسح السحابة من جهاز فارغ):
+        // إذا كانت بيانات السحابة تحتوي على طلاب، والجهاز المحلي لا يحتوي على طلاب:
+        // نعتمد بيانات السحابة دائماً ونتجاهل أي توقيت محلي فارغ!
+        const cloudHasStudents = cloudData.students && cloudData.students.length > 0;
+        const localHasStudents = typeof state !== "undefined" && state.students && state.students.length > 0;
+
+        if (!cloudHasStudents && localHasStudents) {
+          // السحابة فارغة ولكن هذا الجهاز لديه طلاب حقيقيون -> نرفع بيانات هذا الجهاز فوراً لإنقاذ السحابة!
+          console.warn("🛡️ [درع الأمان] السحابة كانت فارغة، تم رفع بيانات هذا الجهاز لحمايتها فوراً!");
+          window.FirebaseSync.pushUpdate({
+            students: state.students,
+            records: state.records,
+            settings: state.settings
+          });
           return;
         }
 
-        // 3. تحديث حالة التطبيق العامة بالبيانات السحابية الواردة
+        if (cloudHasStudents && !localHasStudents) {
+          // السحابة بها طلاب والجهاز المحلي فارغ -> نعتمد بيانات السحابة فوراً دائماً دون أي تردد
+          // نتخطى شرط التوقيت الزمني
+        } else if (cloudData.updatedAt && cloudData.updatedAt < lastLocalSaveTime && localHasStudents) {
+          // إذا كانت بيانات هذا الجهاز أحدث وكلاهما به طلاب: نحدّث السحابة
+          window.FirebaseSync.pushUpdate({
+            students: state.students,
+            records: state.records,
+            settings: state.settings
+          });
+          return;
+        }
+
+        // تحديث حالة التطبيق العامة بالبيانات السحابية الواردة
         if (typeof state !== "undefined") {
           state.students = cloudData.students || [];
           state.records = cloudData.records || {};
@@ -4101,6 +4279,14 @@ async function initFirebase() {
               settings: state.settings,
               savedAt: new Date(cloudData.updatedAt || Date.now()).toISOString()
             }));
+            if (state.students.length > 0) {
+              localStorage.setItem("prep_meeting_backup_permanent", JSON.stringify({
+                students: state.students,
+                records: state.records,
+                settings: state.settings,
+                savedAt: new Date().toISOString()
+              }));
+            }
             lastLocalSaveTime = cloudData.updatedAt || Date.now();
           } catch (e) {}
 
@@ -4115,14 +4301,21 @@ async function initFirebase() {
             }
           } else {
             hasInitialLoaded = true;
+            window.FirebaseSync.hasInitialLoaded = true;
           }
         }
 
         isConnected = true;
         window.FirebaseSync.isConnected = true;
-        updateSyncBadge("connected", "متصل سحابياً (مزامنة فورية)");
+        updateSyncBadge("connected", "متصل سحابياً (مزامنة فورية آمنة 🛡️)");
+
+        // معالجة أي تحديث كان معلقاً
+        if (pendingPushData) {
+          window.FirebaseSync.pushUpdate(pendingPushData.data, pendingPushData.isExplicitWipe);
+          pendingPushData = null;
+        }
       } else {
-        // المستند غير موجود بعد في السحابة: نرفعه فوراً
+        // المستند غير موجود بعد في السحابة
         uploadInitialData(docRef);
       }
     }, (error) => {
@@ -4145,7 +4338,7 @@ async function initFirebase() {
  */
 async function uploadInitialData(docRef) {
   try {
-    if (typeof state !== "undefined") {
+    if (typeof state !== "undefined" && state.students && state.students.length > 0) {
       await setDoc(docRef, {
         students: state.students || [],
         records: state.records || {},
@@ -4156,11 +4349,11 @@ async function uploadInitialData(docRef) {
       isConnected = true;
       window.FirebaseSync.isConnected = true;
       hasInitialLoaded = true;
-      updateSyncBadge("connected", "متصل سحابياً (جاهز)");
+      window.FirebaseSync.hasInitialLoaded = true;
+      updateSyncBadge("connected", "متصل سحابياً (تم حفظ البيانات)");
     }
   } catch (err) {
     console.warn("Upload initial data error:", err);
-    updateSyncBadge("error", "يرجى تفعيل قواعد Firestore في كونسول Firebase");
   }
 }
 
