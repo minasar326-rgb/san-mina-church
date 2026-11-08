@@ -2034,14 +2034,14 @@ const GRADES = {
 
 // تعريف جميع الأنشطة الروحية المتاحة للاختيار
 const ACTIVITIES = {
-  meeting: { id: "meeting", name: "حضور الاجتماع", dayName: "الثلاثاء", icon: "👥", hint: "اجتماع إعدادي الأسبوعي" },
-  agpeya: { id: "agpeya", name: "صلاة الأجبية", dayName: "الأحد", icon: "📖", hint: "المواظبة على صلاة الأجبية" },
-  behavior: { id: "behavior", name: "السلوك والهدوء", dayName: "الأحد", icon: "⭐", hint: "الانضباط والمشاركة الروحية" },
-  bible: { id: "bible", name: "الكتاب المقدس", dayName: "الأحد", icon: "✝️", hint: "حفظ ومتابعة دراسة الكلمة" },
-  tasbeha: { id: "tasbeha", name: "التسبحة", dayName: "الخميس", icon: "🕯️", hint: "حضور تسبحة نصف الليل" },
+  meeting: { id: "meeting", name: "حضور الاجتماع", dayName: "الجمعة", icon: "👥", hint: "اجتماع إعدادي الأسبوعي - الجمعة" },
+  agpeya: { id: "agpeya", name: "صلاة الأجبية", dayName: "الخميس", icon: "📖", hint: "المواظبة على صلاة الأجبية والنوتة الروحية" },
+  behavior: { id: "behavior", name: "السلوك والهدوء", dayName: "الجمعة", icon: "⭐", hint: "الانضباط والمشاركة الروحية" },
+  bible: { id: "bible", name: "الكتاب المقدس", dayName: "الجمعة", icon: "✝️", hint: "حفظ ومتابعة دراسة الكلمة ودرس الكتاب" },
+  tasbeha: { id: "tasbeha", name: "التسبحة", dayName: "الخميس", icon: "🕯️", hint: "حضور تسبحة نصف الليل - الخميس" },
   vespers: { id: "vespers", name: "صلاة العشية", dayName: "الخميس", icon: "✨", hint: "حضور صلاة عشية الخميس" },
   confession: { id: "confession", name: "سر الاعتراف", dayName: "الخميس", icon: "🕊️", hint: "ممارسة سر التوبة والاعتراف" },
-  liturgy: { id: "liturgy", name: "القداس الإلهي", dayName: "الجمعة", icon: "⛪", hint: "التناول والقداس الإلهي" }
+  liturgy: { id: "liturgy", name: "القداس الإلهي", dayName: "الجمعة", icon: "⛪", hint: "التناول والقداس الإلهي - الجمعة" }
 };
 
 // حالة التطبيق
@@ -2958,25 +2958,50 @@ function calculateReportData(startDate, endDate, gradeFilter) {
   // حساب أيام الأسبوع التقويمية التي تقع في هذه الفترة بالكامل (مستقبلياً وحالياً)
   const calDays = countCalendarDaysInRange(startDate, endDate);
 
-  // حساب الفعاليات تلقائياً بناءً على التواريخ المحددة:
-  // لو زودنا تاريخ النهاية تزيد الفعاليات تلقائياً وتزيد الحسبة مباشرة
-  const counts = {
-    meeting: calDays.tuesdays,
-    agpeya: calDays.sundays,
-    behavior: calDays.sundays,
-    bible: calDays.sundays,
-    tasbeha: calDays.thursdays,
-    vespers: calDays.thursdays,
-    confession: calDays.thursdays,
-    liturgy: calDays.fridays
-  };
-
-  const totalEventsPossible = counts.meeting + counts.agpeya + counts.behavior + counts.bible + counts.tasbeha + counts.vespers + counts.confession + counts.liturgy;
-
   // التواريخ المسجلة فعلياً في قاعدة البيانات داخل هذه الفترة
   const recordDates = Object.keys(state.records).filter(date => {
     return (!startDate || date >= startDate) && (!endDate || date <= endDate);
   });
+
+  // فحص الأنشطة التي تم تسجيل حضور فعلي لها في هذه الفترة لمعرفة ما تم عقده فعلياً
+  const hasRecorded = {
+    meeting: true,
+    liturgy: true,
+    bible: false,
+    tasbeha: false,
+    agpeya: false,
+    vespers: false,
+    confession: false,
+    behavior: false
+  };
+
+  recordDates.forEach(date => {
+    const day = state.records[date];
+    if (day && day.activities) {
+      for (const actKey in hasRecorded) {
+        if (day.activities[actKey] && day.activities[actKey].length > 0) {
+          hasRecorded[actKey] = true;
+        }
+      }
+    }
+  });
+
+  // حساب الفعاليات تلقائياً وبدقة:
+  // اجتماع إعدادي والقداس الإلهي يُقامان أسبوعياً يوم الجمعة
+  // التسبحة والعشية وصلاة الأجبية والاعتراف تُقام أيام الخميس
+  // الأنشطة التي لم تُسجل نهائياً في الفترة تُحسب 0 حتى لا يُظلم الطلاب بغيابات لأنشطة لم تُعقد أصلاً
+  const counts = {
+    meeting: calDays.fridays,
+    liturgy: calDays.fridays,
+    bible: hasRecorded.bible ? calDays.fridays : 0,
+    behavior: hasRecorded.behavior ? calDays.fridays : 0,
+    tasbeha: hasRecorded.tasbeha ? calDays.thursdays : 0,
+    vespers: hasRecorded.vespers ? calDays.thursdays : 0,
+    agpeya: hasRecorded.agpeya ? calDays.thursdays : 0,
+    confession: hasRecorded.confession ? calDays.thursdays : 0
+  };
+
+  const totalEventsPossible = counts.meeting + counts.liturgy + counts.tasbeha + counts.bible + counts.agpeya + counts.vespers + counts.confession + counts.behavior;
 
   const targetStudents = state.students.filter(std => {
     return gradeFilter === "all" || std.grade === gradeFilter;
@@ -3086,22 +3111,12 @@ function renderReportsTab() {
       <div class="kpi-card highlight">
         <div class="kpi-icon">👥</div>
         <div class="kpi-val">${reportData.counts.meeting}</div>
-        <div class="kpi-title">حضور الاجتماع (${c.tuesdays} ثلاثاء)</div>
+        <div class="kpi-title">حضور الاجتماع (${c.fridays} جمعة)</div>
       </div>
       <div class="kpi-card highlight">
-        <div class="kpi-icon">📖</div>
-        <div class="kpi-val">${reportData.counts.agpeya}</div>
-        <div class="kpi-title">صلاة الأجبية (${c.sundays} أحد)</div>
-      </div>
-      <div class="kpi-card highlight">
-        <div class="kpi-icon">⭐</div>
-        <div class="kpi-val">${reportData.counts.behavior}</div>
-        <div class="kpi-title">السلوك (${c.sundays} أحد)</div>
-      </div>
-      <div class="kpi-card highlight">
-        <div class="kpi-icon">✝️</div>
-        <div class="kpi-val">${reportData.counts.bible}</div>
-        <div class="kpi-title">الكتاب المقدس (${c.sundays} أحد)</div>
+        <div class="kpi-icon">⛪</div>
+        <div class="kpi-val">${reportData.counts.liturgy}</div>
+        <div class="kpi-title">القداس الإلهي (${c.fridays} جمعة)</div>
       </div>
       <div class="kpi-card highlight">
         <div class="kpi-icon">🕯️</div>
@@ -3109,19 +3124,29 @@ function renderReportsTab() {
         <div class="kpi-title">التسبحة (${c.thursdays} خميس)</div>
       </div>
       <div class="kpi-card highlight">
+        <div class="kpi-icon">✝️</div>
+        <div class="kpi-val">${reportData.counts.bible}</div>
+        <div class="kpi-title">الكتاب المقدس (${reportData.counts.bible > 0 ? c.fridays + ' جمعة' : 'لم يُسجل'})</div>
+      </div>
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">📖</div>
+        <div class="kpi-val">${reportData.counts.agpeya}</div>
+        <div class="kpi-title">صلاة الأجبية (${reportData.counts.agpeya > 0 ? c.thursdays + ' خميس' : 'لم يُسجل'})</div>
+      </div>
+      <div class="kpi-card highlight">
         <div class="kpi-icon">✨</div>
         <div class="kpi-val">${reportData.counts.vespers}</div>
-        <div class="kpi-title">العشية (${c.thursdays} خميس)</div>
+        <div class="kpi-title">العشية (${reportData.counts.vespers > 0 ? c.thursdays + ' خميس' : 'لم تُسجل'})</div>
       </div>
       <div class="kpi-card highlight">
         <div class="kpi-icon">🕊️</div>
         <div class="kpi-val">${reportData.counts.confession}</div>
-        <div class="kpi-title">الاعتراف (${c.thursdays} خميس)</div>
+        <div class="kpi-title">الاعتراف (${reportData.counts.confession > 0 ? c.thursdays + ' خميس' : 'لم يُسجل'})</div>
       </div>
       <div class="kpi-card highlight">
-        <div class="kpi-icon">⛪</div>
-        <div class="kpi-val">${reportData.counts.liturgy}</div>
-        <div class="kpi-title">القداس الإلهي (${c.fridays} جمعة)</div>
+        <div class="kpi-icon">⭐</div>
+        <div class="kpi-val">${reportData.counts.behavior}</div>
+        <div class="kpi-title">السلوك (${reportData.counts.behavior > 0 ? c.fridays + ' جمعة' : 'لم يُسجل'})</div>
       </div>
       <div class="kpi-card highlight-success">
         <div class="kpi-icon">🎯</div>
@@ -3160,12 +3185,10 @@ function renderReportsTab() {
       </div>
       <div style="font-size: 0.9rem; color: #047857; font-weight: 700; line-height: 1.8;">
         مرّ في هذه الفترة تلقائياً: 
-        <strong>(${c.tuesdays})</strong> أيام ثلاثاء للاجتماع &bull; 
-        <strong>(${c.sundays})</strong> أيام أحد (أجبية + سلوك + كتاب مقدس) &bull; 
-        <strong>(${c.thursdays})</strong> أيام خميس (تسبحة + عشية + اعتراف) &bull; 
-        <strong>(${c.fridays})</strong> أيام جمعة للقداس الإلهي.
+        <strong>(${c.fridays})</strong> أيام جمعة (حضور الاجتماع الأسبوعي + القداس الإلهي + درس الكتاب) &bull; 
+        <strong>(${c.thursdays})</strong> أيام خميس (التسبحة + صلاة العشية والأجبية والاعتراف).
         <br>
-        المجموع الإجمالي للفرص والفعاليات الروحية في هذه الفترة = <strong>${reportData.totalEventsPossible}</strong> فعالية.
+        المجموع الإجمالي للفعاليات المتاحة في هذه الفترة = <strong>${reportData.totalEventsPossible}</strong> فعالية.
       </div>
     </div>
 
@@ -3194,10 +3217,10 @@ function renderReportsTab() {
             <th style="width: 45px;">م</th>
             <th>اسم الطالب</th>
             <th style="width: 120px;">القسم</th>
-            <th style="text-align: center;">الاجتماع <span class="badge-total">${reportData.counts.meeting} ثلاثاء</span></th>
-            <th style="text-align: center;">الأجبية <span class="badge-total">${reportData.counts.agpeya} أحد</span></th>
-            <th style="text-align: center;">السلوك <span class="badge-total">${reportData.counts.behavior} أحد</span></th>
-            <th style="text-align: center;">الكتاب المقدس <span class="badge-total">${reportData.counts.bible} أحد</span></th>
+            <th style="text-align: center;">الاجتماع <span class="badge-total">${reportData.counts.meeting} جمعة</span></th>
+            <th style="text-align: center;">الأجبية <span class="badge-total">${reportData.counts.agpeya} خميس</span></th>
+            <th style="text-align: center;">السلوك <span class="badge-total">${reportData.counts.behavior} جمعة</span></th>
+            <th style="text-align: center;">الكتاب المقدس <span class="badge-total">${reportData.counts.bible} جمعة</span></th>
             <th style="text-align: center;">التسبحة <span class="badge-total">${reportData.counts.tasbeha} خميس</span></th>
             <th style="text-align: center;">العشية <span class="badge-total">${reportData.counts.vespers} خميس</span></th>
             <th style="text-align: center;">الاعتراف <span class="badge-total">${reportData.counts.confession} خميس</span></th>
