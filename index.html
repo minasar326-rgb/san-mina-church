@@ -2,8 +2,19 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>نظام حضور وغياب اجتماع إعدادي - الإصدار الملكي</title>
+  
+  <!-- إعدادات تطبيق الموبايل PWA كامل متكامل -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="اجتماع إعدادي">
+  <meta name="application-name" content="اجتماع إعدادي">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
   
   <!-- خط Cairo العربي الفاخر -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1229,6 +1240,83 @@ body {
   }
 }
 
+/* ================== أنماط تطبيق الموبايل (Native Mobile App PWA) ================== */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 75px !important;
+  }
+
+  .nav-tabs-wrapper {
+    display: none !important;
+  }
+
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 9999;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 0.5rem;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    padding: 6px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    max-width: 85px;
+    touch-action: manipulation;
+  }
+
+  .mobile-nav-item.active {
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+  }
+
+  .mobile-nav-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .mobile-nav-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+.install-app-btn {
+  animation: pulseInstall 2.5s infinite;
+}
+
+@keyframes pulseInstall {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+}
+
 </style>
 </head>
 <body>
@@ -1245,6 +1333,10 @@ body {
           </div>
         </div>
         <div class="header-badges">
+          <button id="pwaInstallBtn" class="luxury-badge install-app-btn" style="display:none; cursor:pointer; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; font-weight: bold; padding: 6px 14px; border-radius: 9999px;">
+            <span>📲</span>
+            <span>تثبيت الأبليكيشن</span>
+          </button>
           <span class="luxury-badge" id="firebaseSyncBadge" title="حالة الاتصال السحابي اللحظي">
             <span id="firebaseSyncDot" class="sync-dot" style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#94a3b8; margin-left:6px; box-shadow: 0 0 6px currentColor;"></span>
             <span id="firebaseSyncText">جاري الاتصال بالسحابة...</span>
@@ -1557,6 +1649,26 @@ body {
       </form>
     </div>
   </div>
+
+  <!-- شريط التنقل السفلي الاحترافي للموبايل (Mobile App Navigation Bar) -->
+  <nav class="mobile-bottom-nav no-print">
+    <button class="mobile-nav-item active" data-nav-tab="attendance">
+      <span class="mobile-nav-icon">📝</span>
+      <span class="mobile-nav-label">الحضور</span>
+    </button>
+    <button class="mobile-nav-item" data-nav-tab="students">
+      <span class="mobile-nav-icon">👥</span>
+      <span class="mobile-nav-label">الطلاب</span>
+    </button>
+    <button class="mobile-nav-item" data-nav-tab="reports">
+      <span class="mobile-nav-icon">📊</span>
+      <span class="mobile-nav-label">التقارير</span>
+    </button>
+    <button class="mobile-nav-item" data-nav-tab="settings">
+      <span class="mobile-nav-icon">⚙️</span>
+      <span class="mobile-nav-label">الإعدادات</span>
+    </button>
+  </nav>
 
   <!-- حاوية التنبيهات (Toasts) -->
   <div id="toastContainer" class="toast-container"></div>
@@ -2973,6 +3085,63 @@ const GOLDEN_PREP_DATA = {
   },
   "savedAt": "2026-11-08T21:00:52.722Z"
 };
+
+
+function loadData() {
+  try {
+    let saved = localStorage.getItem("prep_meeting_db_v1");
+    if (!saved || saved === "{}" || (JSON.parse(saved).students || []).length === 0) {
+      const backupPerm = localStorage.getItem("prep_meeting_backup_permanent");
+      if (backupPerm && (JSON.parse(backupPerm).students || []).length > 0) {
+        console.log("🛡️ [درع الأمان] تم استرجاع البيانات تلقائياً من النسخة الدائمة!");
+        saved = backupPerm;
+      } else {
+        console.log("🛡️ [درع الأمان] استخدام قاعدة البيانات الذهبية المعتمدة (48 طالباً)!");
+        saved = JSON.stringify(GOLDEN_PREP_DATA);
+        try {
+          localStorage.setItem("prep_meeting_db_v1", saved);
+          localStorage.setItem("prep_meeting_backup_permanent", saved);
+        } catch(e) {}
+      }
+    }
+
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      let rawStudents = parsed.students || [];
+      state.students = rawStudents.filter(s => s && s.name && s.name.trim());
+      // إذا كان عدد الطلاب أقل من 40 ندمج فوراً مع قاعدة البيانات الذهبية المعتمدة
+      if (state.students.length < 40 && typeof GOLDEN_PREP_DATA !== "undefined") {
+        console.warn("⚠️ تم رصد نقص في عدد الطلاب، جاري استعادة قاعدة البيانات الكاملة فوراً...");
+        state.students = GOLDEN_PREP_DATA.students;
+        state.records = { ...GOLDEN_PREP_DATA.records, ...(parsed.records || {}) };
+      } else {
+        state.records = parsed.records || {};
+      }
+      state.settings = { ...state.settings, ...(parsed.settings || {}) };
+      if (!state.settings.churchName || state.settings.churchName.includes("مارمرقس")) {
+        state.settings.churchName = "كنيسة الشهيد العظيم مارمينا العجائبي";
+      }
+    } else {
+      state.students = GOLDEN_PREP_DATA.students;
+      state.records = GOLDEN_PREP_DATA.records;
+      state.settings = GOLDEN_PREP_DATA.settings;
+    }
+  } catch (e) {
+    console.error("Error loading data:", e);
+    state.students = GOLDEN_PREP_DATA.students;
+    state.records = GOLDEN_PREP_DATA.records;
+    state.settings = GOLDEN_PREP_DATA.settings;
+  }
+}
+
+function saveData(silent = false, isExplicitWipe = false) {
+  try {
+    const dataToSave = {
+      students: state.students,
+      records: state.records,
+      settings: state.settings,
+      savedAt: new Date().toISOString()
+    };
     localStorage.setItem("prep_meeting_db_v1", JSON.stringify(dataToSave));
 
     if (state.students && state.students.length > 0) {
@@ -5213,6 +5382,95 @@ if (document.readyState === "loading") {
 } else {
   initFirebase();
 }
+
+  </script>
+
+  <!-- تثبيت وإدارة تطبيق الموبايل PWA -->
+  <script>
+/**
+ * وحدة تحويل الموقع إلى موبايل أبليكيشن متكامل (Progressive Web App - PWA)
+ * - تسجيل Service Worker للعمل بدون إنترنت (Offline Mode)
+ * - زر تثبيت التطبيق بنقرة واحدة على الهواتف والأجهزة
+ * - دعم كامل لهواتف Android و iPhone / iPad (iOS)
+ */
+
+(function initPWA() {
+  let deferredPrompt = null;
+
+  // 1. تسجيل السيرفيس وركر لتمكين التثبيت والعمل أوفلاين
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => {
+          console.log('📱 [تطبيق الموبايل] تم تسجيل Service Worker بنجاح!', reg.scope);
+        })
+        .catch((err) => {
+          console.warn('⚠️ تعذر تسجيل Service Worker:', err);
+        });
+    });
+  }
+
+  // 2. التقاط حدث التثبيت لأجهزة Android و Chrome
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const installBtn = document.getElementById('pwaInstallBtn');
+    if (installBtn) {
+      installBtn.style.display = 'inline-flex';
+    }
+  });
+
+  // 3. مستمع زر التثبيت
+  document.addEventListener('DOMContentLoaded', () => {
+    const installBtn = document.getElementById('pwaInstallBtn');
+    if (!installBtn) return;
+
+    // التحقق مما إذا كان التطبيق مثبتاً بالفعل
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    if (isStandalone) {
+      installBtn.style.display = 'none';
+      return;
+    }
+
+    // الكشف عن هواتف آيفون / آيباد (iOS)
+    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+
+    if (isIos && !isStandalone) {
+      installBtn.style.display = 'inline-flex';
+    }
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          console.log('🎉 تم قبول تثبيت التطبيق على الهاتف!');
+          if (typeof showToast === 'function') {
+            showToast('🎉 جاري تثبيت تطبيق اجتماع إعدادي على هاتفك...', 'success');
+          }
+          installBtn.style.display = 'none';
+        }
+        deferredPrompt = null;
+      } else if (isIos) {
+        alert("📱 لتثبيت التطبيق على هاتف iPhone أو iPad:\n\n1. اضغط على زر المشاركة (Share) أسفل الشاشة ⎋\n2. مرر لأسفل واختر 'إضافة إلى الشاشة الرئيسية' (Add to Home Screen) ➕\n3. اضغط على 'إضافة' (Add) ليصبح التطبيق معك على شاشة الموبايل!");
+      } else {
+        if (typeof showToast === 'function') {
+          showToast('التطبيق جاهز، يمكنك إضافته لشاشتك الرئيسية من قائمة المتصفح', 'info');
+        }
+      }
+    });
+  });
+
+  // 4. إخفاء الزر بعد اكتمال التثبيت
+  window.addEventListener('appinstalled', () => {
+    console.log('🎉 تم تثبيت التطبيق بنجاح!');
+    const installBtn = document.getElementById('pwaInstallBtn');
+    if (installBtn) installBtn.style.display = 'none';
+    if (typeof showToast === 'function') {
+      showToast('🎉 مبروك! أصبح تطبيق اجتماع إعدادي مثبتاً كأبليكيشن على هاتفك', 'success');
+    }
+  });
+})();
 
   </script>
 </body>
