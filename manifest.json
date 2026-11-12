@@ -1,0 +1,22 @@
+{
+  "name": "اجتماع إعدادي - كنيسة مارمينا",
+  "short_name": "إعدادي مارمينا",
+  "description": "تطبيق الحضور والغياب والمتابعة الروحية لاجتماع إعدادي - كنيسة الشهيد العظيم مارمينا العجائبي",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["education", "productivity", "lifestyle"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
