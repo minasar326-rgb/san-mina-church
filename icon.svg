@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle -->
+  <rect width="512" height="512" rx="115" fill="url(#bgGrad)"/>
+  <rect x="12" y="12" width="488" height="488" rx="103" fill="none" stroke="url(#goldGrad)" stroke-width="6" opacity="0.6"/>
+
+  <!-- Ornate Coptic Cross in Center -->
+  <g transform="translate(256, 230)" filter="url(#glow)">
+    <!-- Vertical beam -->
+    <path d="M -18 -140 L 18 -140 L 14 -30 L 30 -14 L 140 -18 L 140 18 L 30 14 L 14 30 L 18 160 L -18 160 L -14 30 L -30 14 L -140 18 L -140 -18 L -30 -14 L -14 -30 Z" fill="url(#goldGrad)"/>
+    
+    <!-- Central ring -->
+    <circle cx="0" cy="0" r="42" fill="#0f172a" stroke="url(#goldGrad)" stroke-width="10"/>
+    <circle cx="0" cy="0" r="16" fill="url(#goldGrad)"/>
+
+    <!-- Decorative cross finials -->
+    <circle cx="0" cy="-145" r="14" fill="url(#goldGrad)"/>
+    <circle cx="0" cy="165" r="14" fill="url(#goldGrad)"/>
+    <circle cx="-145" cy="0" r="14" fill="url(#goldGrad)"/>
+    <circle cx="145" cy="0" r="14" fill="url(#goldGrad)"/>
+
+    <!-- 4 corner rays -->
+    <line x1="-50" y1="-50" x2="-85" y2="-85" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round"/>
+    <line x1="50" y1="-50" x2="85" y2="-85" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round"/>
+    <line x1="-50" y1="50" x2="-85" y2="85" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="85" y2="85" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <!-- Title Text -->
+  <text x="256" y="445" font-family="'Cairo', sans-serif" font-size="44" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">اجتماع إعدادي</text>
+  <text x="256" y="482" font-family="'Cairo', sans-serif" font-size="24" font-weight="700" fill="#fbbf24" text-anchor="middle">كنيسة مارمينا العجائبي</text>
+</svg>
