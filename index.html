@@ -1416,6 +1416,14 @@ body {
               </div>
             </div>
           </div>
+
+          <!-- شريط التواريخ المسجلة مسبقاً للوصول السريع بنقرة واحدة -->
+          <div class="input-group" style="margin-top: 0.75rem;">
+            <label class="input-label" style="font-size: 0.85rem; color: #94a3b8;">⚡ تواريخ مسجلة مسبقاً (اضغط للانتقال فوراً وعرض الحضور والغياب):</label>
+            <div id="recordedDatesPills" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <!-- يتم التعبئة برمجياً عبر renderRecordedDatesPills -->
+            </div>
+          </div>
         </div>
 
         <!-- الحاوية الديناميكية لطريقة العرض المحددة (طالب بطالب أو جدول) -->
@@ -2691,7 +2699,20 @@ const GOLDEN_PREP_DATA = {
           "std-1790548754070",
           "std-prep-3005",
           "std-prep-3001",
-          "std-prep-1100"
+          "std-prep-1100",
+          "std-prep-1102",
+          "std-prep-1103",
+          "std-prep-2100",
+          "std-prep-2101",
+          "std-prep-2103",
+          "std-prep-3004",
+          "std-prep-3100",
+          "std-prep-3101",
+          "std-prep-3103",
+          "std-prep-3104",
+          "std-prep-3105",
+          "std-prep-3106",
+          "std-prep-3108"
         ],
         "meeting": [
           "std-prep-1000",
@@ -2707,7 +2728,20 @@ const GOLDEN_PREP_DATA = {
           "std-prep-3003",
           "std-prep-3005",
           "std-prep-3001",
-          "std-prep-1100"
+          "std-prep-1100",
+          "std-prep-1102",
+          "std-prep-1103",
+          "std-prep-2100",
+          "std-prep-2101",
+          "std-prep-2103",
+          "std-prep-3004",
+          "std-prep-3100",
+          "std-prep-3101",
+          "std-prep-3103",
+          "std-prep-3104",
+          "std-prep-3105",
+          "std-prep-3106",
+          "std-prep-3108"
         ],
         "bible": [
           "std-prep-1004",
@@ -2716,7 +2750,14 @@ const GOLDEN_PREP_DATA = {
           "std-prep-1009",
           "std-prep-1015",
           "std-prep-1021",
-          "std-1790548754070"
+          "std-1790548754070",
+          "std-prep-1103",
+          "std-prep-2101",
+          "std-prep-2103",
+          "std-prep-3100",
+          "std-prep-3104",
+          "std-prep-3106",
+          "std-prep-3108"
         ],
         "agpeya": [],
         "confession": [],
@@ -2767,7 +2808,22 @@ const GOLDEN_PREP_DATA = {
           "std-prep-3002",
           "std-prep-3003",
           "std-prep-3005",
-          "std-prep-3001"
+          "std-prep-3001",
+          "std-prep-1101",
+          "std-prep-1102",
+          "std-prep-1103",
+          "std-prep-2100",
+          "std-prep-2102",
+          "std-prep-2103",
+          "std-prep-3004",
+          "std-prep-3100",
+          "std-prep-3102",
+          "std-prep-3103",
+          "std-prep-3104",
+          "std-prep-3105",
+          "std-prep-3107",
+          "std-prep-3108",
+          "std-prep-3006"
         ],
         "meeting": [
           "std-prep-1001",
@@ -2791,12 +2847,34 @@ const GOLDEN_PREP_DATA = {
           "std-prep-3002",
           "std-prep-3003",
           "std-prep-3005",
-          "std-prep-3001"
+          "std-prep-3001",
+          "std-prep-1101",
+          "std-prep-1102",
+          "std-prep-1103",
+          "std-prep-2100",
+          "std-prep-2102",
+          "std-prep-2103",
+          "std-prep-3004",
+          "std-prep-3100",
+          "std-prep-3102",
+          "std-prep-3103",
+          "std-prep-3104",
+          "std-prep-3105",
+          "std-prep-3107",
+          "std-prep-3108",
+          "std-prep-3006"
         ],
         "bible": [
           "std-prep-1023",
           "std-prep-3005",
-          "std-prep-3001"
+          "std-prep-3001",
+          "std-prep-1102",
+          "std-prep-2100",
+          "std-prep-2102",
+          "std-prep-3004",
+          "std-prep-3103",
+          "std-prep-3105",
+          "std-prep-3107"
         ],
         "agpeya": [],
         "confession": [],
@@ -2811,7 +2889,10 @@ const GOLDEN_PREP_DATA = {
         "liturgy": [],
         "meeting": [],
         "bible": [],
-        "agpeya": [],
+        "agpeya": [
+          "std-prep-2102",
+          "std-prep-3103"
+        ],
         "confession": [],
         "tasbeha": [
           "std-prep-1007",
@@ -2819,7 +2900,12 @@ const GOLDEN_PREP_DATA = {
           "std-prep-1011",
           "std-prep-1021",
           "std-prep-1023",
-          "std-prep-3002"
+          "std-prep-3002",
+          "std-prep-1103",
+          "std-prep-2102",
+          "std-prep-3100",
+          "std-prep-3103",
+          "std-prep-3106"
         ],
         "vespers": [],
         "behavior": []
@@ -2842,7 +2928,21 @@ const GOLDEN_PREP_DATA = {
           "std-prep-3002",
           "std-prep-3003",
           "std-prep-3001",
-          "std-prep-1100"
+          "std-prep-1100",
+          "std-prep-1101",
+          "std-prep-1102",
+          "std-prep-1103",
+          "std-prep-2101",
+          "std-prep-2102",
+          "std-prep-2103",
+          "std-prep-3004",
+          "std-prep-3101",
+          "std-prep-3102",
+          "std-prep-3103",
+          "std-prep-3104",
+          "std-prep-3106",
+          "std-prep-3107",
+          "std-prep-3108"
         ],
         "meeting": [
           "std-prep-1001",
@@ -2859,11 +2959,33 @@ const GOLDEN_PREP_DATA = {
           "std-prep-3003",
           "std-prep-3005",
           "std-prep-3001",
-          "std-prep-1100"
+          "std-prep-1100",
+          "std-prep-1101",
+          "std-prep-1102",
+          "std-prep-1103",
+          "std-prep-2101",
+          "std-prep-2102",
+          "std-prep-2103",
+          "std-prep-3004",
+          "std-prep-3101",
+          "std-prep-3102",
+          "std-prep-3103",
+          "std-prep-3104",
+          "std-prep-3106",
+          "std-prep-3107",
+          "std-prep-3108"
         ],
         "bible": [
           "std-prep-3003",
-          "std-prep-3001"
+          "std-prep-3001",
+          "std-prep-1101",
+          "std-prep-1103",
+          "std-prep-2101",
+          "std-prep-2103",
+          "std-prep-3102",
+          "std-prep-3104",
+          "std-prep-3106",
+          "std-prep-3108"
         ],
         "agpeya": [],
         "confession": [],
@@ -2879,14 +3001,23 @@ const GOLDEN_PREP_DATA = {
         "meeting": [],
         "bible": [],
         "agpeya": [
-          "std-prep-1021"
+          "std-prep-1021",
+          "std-prep-2101",
+          "std-prep-3102",
+          "std-prep-3108"
         ],
         "confession": [],
         "tasbeha": [
           "std-1790548798699",
           "std-prep-3003",
           "std-prep-3006",
-          "std-prep-3001"
+          "std-prep-3001",
+          "std-prep-1102",
+          "std-prep-2101",
+          "std-prep-3004",
+          "std-prep-3102",
+          "std-prep-3105",
+          "std-prep-3108"
         ],
         "vespers": [],
         "behavior": []
@@ -2908,7 +3039,21 @@ const GOLDEN_PREP_DATA = {
           "std-1790548754070",
           "std-prep-3007",
           "std-prep-3005",
-          "std-prep-3001"
+          "std-prep-3001",
+          "std-prep-1101",
+          "std-prep-1102",
+          "std-prep-2100",
+          "std-prep-2101",
+          "std-prep-2102",
+          "std-prep-2103",
+          "std-prep-3100",
+          "std-prep-3101",
+          "std-prep-3102",
+          "std-prep-3103",
+          "std-prep-3105",
+          "std-prep-3106",
+          "std-prep-3107",
+          "std-prep-3108"
         ],
         "meeting": [
           "std-prep-1001",
@@ -2923,9 +3068,31 @@ const GOLDEN_PREP_DATA = {
           "std-1790548754070",
           "std-prep-3007",
           "std-prep-3005",
-          "std-prep-3001"
+          "std-prep-3001",
+          "std-prep-1101",
+          "std-prep-1102",
+          "std-prep-2100",
+          "std-prep-2101",
+          "std-prep-2102",
+          "std-prep-2103",
+          "std-prep-3100",
+          "std-prep-3101",
+          "std-prep-3102",
+          "std-prep-3103",
+          "std-prep-3105",
+          "std-prep-3106",
+          "std-prep-3107",
+          "std-prep-3108"
         ],
-        "bible": [],
+        "bible": [
+          "std-prep-1102",
+          "std-prep-2100",
+          "std-prep-2102",
+          "std-prep-3101",
+          "std-prep-3103",
+          "std-prep-3105",
+          "std-prep-3107"
+        ],
         "agpeya": [],
         "confession": [],
         "tasbeha": [],
@@ -2940,7 +3107,10 @@ const GOLDEN_PREP_DATA = {
         "meeting": [],
         "bible": [],
         "agpeya": [
-          "std-prep-1007"
+          "std-prep-1007",
+          "std-prep-2100",
+          "std-prep-3101",
+          "std-prep-3107"
         ],
         "confession": [],
         "tasbeha": [
@@ -2951,7 +3121,13 @@ const GOLDEN_PREP_DATA = {
           "std-prep-1009",
           "std-prep-3003",
           "std-prep-3006",
-          "std-prep-3001"
+          "std-prep-3001",
+          "std-prep-1101",
+          "std-prep-2100",
+          "std-prep-2103",
+          "std-prep-3101",
+          "std-prep-3104",
+          "std-prep-3107"
         ],
         "vespers": [],
         "behavior": []
@@ -2972,7 +3148,21 @@ const GOLDEN_PREP_DATA = {
           "std-prep-1023",
           "std-prep-3002",
           "std-prep-3001",
-          "std-prep-1100"
+          "std-prep-1100",
+          "std-prep-1101",
+          "std-prep-1103",
+          "std-prep-2100",
+          "std-prep-2101",
+          "std-prep-2102",
+          "std-prep-3004",
+          "std-prep-3100",
+          "std-prep-3101",
+          "std-prep-3102",
+          "std-prep-3104",
+          "std-prep-3105",
+          "std-prep-3106",
+          "std-prep-3107",
+          "std-prep-3006"
         ],
         "meeting": [
           "std-prep-1001",
@@ -2986,13 +3176,34 @@ const GOLDEN_PREP_DATA = {
           "std-prep-1023",
           "std-prep-3002",
           "std-prep-3001",
-          "std-prep-1100"
+          "std-prep-1100",
+          "std-prep-1101",
+          "std-prep-1103",
+          "std-prep-2100",
+          "std-prep-2101",
+          "std-prep-2102",
+          "std-prep-3004",
+          "std-prep-3100",
+          "std-prep-3101",
+          "std-prep-3102",
+          "std-prep-3104",
+          "std-prep-3105",
+          "std-prep-3106",
+          "std-prep-3107",
+          "std-prep-3006"
         ],
         "bible": [
           "std-prep-1013",
           "std-prep-1014",
           "std-prep-1021",
-          "std-1790548754070"
+          "std-1790548754070",
+          "std-prep-1101",
+          "std-prep-1103",
+          "std-prep-2101",
+          "std-prep-3100",
+          "std-prep-3102",
+          "std-prep-3104",
+          "std-prep-3106"
         ],
         "agpeya": [],
         "confession": [],
@@ -3007,10 +3218,19 @@ const GOLDEN_PREP_DATA = {
         "liturgy": [],
         "meeting": [],
         "bible": [],
-        "agpeya": [],
+        "agpeya": [
+          "std-prep-1103",
+          "std-prep-3100",
+          "std-prep-3106"
+        ],
         "confession": [],
         "tasbeha": [
-          "std-prep-1005"
+          "std-prep-1005",
+          "std-prep-1103",
+          "std-prep-2102",
+          "std-prep-3100",
+          "std-prep-3103",
+          "std-prep-3106"
         ],
         "vespers": [],
         "behavior": []
@@ -3032,7 +3252,21 @@ const GOLDEN_PREP_DATA = {
           "std-1790548754070",
           "std-prep-3005",
           "std-prep-3001",
-          "std-prep-1100"
+          "std-prep-1100",
+          "std-prep-1102",
+          "std-prep-1103",
+          "std-prep-2100",
+          "std-prep-2101",
+          "std-prep-2103",
+          "std-prep-3004",
+          "std-prep-3100",
+          "std-prep-3101",
+          "std-prep-3103",
+          "std-prep-3104",
+          "std-prep-3105",
+          "std-prep-3106",
+          "std-prep-3108",
+          "std-prep-3006"
         ],
         "meeting": [
           "std-prep-1001",
@@ -3047,11 +3281,31 @@ const GOLDEN_PREP_DATA = {
           "std-1790548754070",
           "std-prep-3005",
           "std-prep-3001",
-          "std-prep-1100"
+          "std-prep-1100",
+          "std-prep-1102",
+          "std-prep-1103",
+          "std-prep-2100",
+          "std-prep-2101",
+          "std-prep-2103",
+          "std-prep-3004",
+          "std-prep-3100",
+          "std-prep-3101",
+          "std-prep-3103",
+          "std-prep-3104",
+          "std-prep-3105",
+          "std-prep-3106",
+          "std-prep-3108",
+          "std-prep-3006"
         ],
         "bible": [
           "std-prep-1009",
-          "std-prep-1021"
+          "std-prep-1021",
+          "std-prep-1102",
+          "std-prep-2100",
+          "std-prep-3004",
+          "std-prep-3101",
+          "std-prep-3103",
+          "std-prep-3105"
         ],
         "agpeya": [],
         "confession": [],
@@ -3066,7 +3320,11 @@ const GOLDEN_PREP_DATA = {
         "liturgy": [],
         "meeting": [],
         "bible": [],
-        "agpeya": [],
+        "agpeya": [
+          "std-prep-1102",
+          "std-prep-3004",
+          "std-prep-3105"
+        ],
         "confession": [],
         "tasbeha": [
           "std-prep-1005",
@@ -3076,7 +3334,13 @@ const GOLDEN_PREP_DATA = {
           "std-prep-1021",
           "std-prep-3002",
           "std-prep-3001",
-          "std-prep-1100"
+          "std-prep-1100",
+          "std-prep-1102",
+          "std-prep-2101",
+          "std-prep-3004",
+          "std-prep-3102",
+          "std-prep-3105",
+          "std-prep-3108"
         ],
         "vespers": [],
         "behavior": []
@@ -3163,23 +3427,30 @@ function saveData(silent = false, isExplicitWipe = false) {
 }
 
 function initAttendanceDefaults() {
-  const today = new Date().toISOString().split("T")[0];
-  state.currentDate = today;
+  // العثور تلقائياً على أحدث تاريخ مسجل به حضور فعلي بدلاً من فتح صفحة فارغة
+  const recordedDates = Object.keys(state.records || {}).filter(d => {
+    const rec = state.records[d];
+    if (!rec || !rec.activities) return false;
+    return Object.values(rec.activities).some(arr => Array.isArray(arr) && arr.length > 0);
+  }).sort();
+
+  const latestDate = recordedDates.length > 0 ? recordedDates[recordedDates.length - 1] : new Date().toISOString().split("T")[0];
+  state.currentDate = latestDate;
   const dateInput = document.getElementById("attDateInput");
-  if (dateInput) dateInput.value = today;
+  if (dateInput) dateInput.value = latestDate;
 }
 
 function initReportDefaults() {
   const now = new Date();
-  const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split("T")[0];
   const today = now.toISOString().split("T")[0];
 
-  state.reportStartDate = firstDayOfMonth;
+  // البدء من 1 سبتمبر 2026 (بداية العام الدراسي والخدمي) ليشمل التقرير كافة القداسات والاجتماعات منذ البداية
+  state.reportStartDate = "2026-09-01";
   state.reportEndDate = today;
 
   const startInput = document.getElementById("reportStartDate");
   const endInput = document.getElementById("reportEndDate");
-  if (startInput) startInput.value = firstDayOfMonth;
+  if (startInput) startInput.value = "2026-09-01";
   if (endInput) endInput.value = today;
 }
 
@@ -4959,6 +5230,29 @@ function showToast(message, type = "info") {
     toast.classList.add("fade-out");
     setTimeout(() => toast.remove(), 400);
   }, 2500);
+}
+
+
+function renderRecordedDatesPills() {
+  const container = document.getElementById("recordedDatesPills");
+  if (!container) return;
+
+  const dayNamesShort = ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"];
+  const dates = Object.keys(state.records || {}).filter(d => {
+    const rec = state.records[d];
+    if (!rec || !rec.activities) return false;
+    return Object.values(rec.activities).some(arr => Array.isArray(arr) && arr.length > 0);
+  }).sort().reverse();
+
+  let html = "";
+  dates.forEach(d => {
+    const dt = new Date(d);
+    const dayName = dayNamesShort[dt.getDay()];
+    const isCur = d === state.currentDate;
+    const activeStyle = isCur ? "background: #3b82f6; color: white; border-color: #60a5fa;" : "background: rgba(255,255,255,0.08); color: #cbd5e1; border-color: rgba(255,255,255,0.15);";
+    html += `<button type="button" class="btn" style="${activeStyle} padding: 4px 10px; font-size: 0.8rem; border-radius: 9999px; font-weight: 700; cursor: pointer;" onclick="onAttendanceDateChange('${d}')">📅 ${dayName} ${d.slice(5)}</button>`;
+  });
+  container.innerHTML = html;
 }
 
   </script>
